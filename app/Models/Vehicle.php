@@ -38,6 +38,14 @@ class Vehicle extends Model
     /** @use HasFactory<VehicleFactory> */
     use HasFactory, SoftDeletes;
 
+    protected static function booted(): void
+    {
+        // Hapus permanen kendaraan -> hapus juga file fotonya.
+        static::forceDeleting(function (Vehicle $vehicle): void {
+            $vehicle->images->each->delete();
+        });
+    }
+
     protected function casts(): array
     {
         return [
@@ -102,5 +110,28 @@ class Vehicle extends Model
     public function scopeWithStatus(Builder $query, VehicleStatus $status): Builder
     {
         return $query->where('status', $status->value);
+    }
+
+    /**
+     * Pastikan tepat satu foto utama: jika tidak ada, foto pertama dipilih;
+     * jika lebih dari satu, hanya yang pertama yang dipertahankan.
+     */
+    public function normalizePrimaryImage(): void
+    {
+        $images = $this->images()->get();
+
+        if ($images->isEmpty()) {
+            return;
+        }
+
+        $primary = $images->firstWhere('is_primary', true) ?? $images->first();
+
+        foreach ($images as $image) {
+            $shouldBePrimary = $image->is($primary);
+
+            if ($image->is_primary !== $shouldBePrimary) {
+                $image->forceFill(['is_primary' => $shouldBePrimary])->saveQuietly();
+            }
+        }
     }
 }

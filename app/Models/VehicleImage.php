@@ -15,6 +15,16 @@ class VehicleImage extends Model
     /** @use HasFactory<VehicleImageFactory> */
     use HasFactory;
 
+    protected static function booted(): void
+    {
+        // Hapus file fisik ketika foto dihapus dari admin.
+        static::deleted(function (VehicleImage $image): void {
+            if ($image->image_path) {
+                Storage::disk('public')->delete($image->image_path);
+            }
+        });
+    }
+
     protected function casts(): array
     {
         return [
