@@ -6,6 +6,9 @@ use App\Enums\CatalogKind;
 use App\Models\WebsiteSetting;
 use App\Services\VehicleCatalog;
 use App\Services\WhatsAppLink;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -38,6 +41,8 @@ class AppServiceProvider extends ServiceProvider
             'showMotor' => VehicleCatalog::motorEnabled()
                 && (new VehicleCatalog)->visible(CatalogKind::Motor)->exists(),
         ]);
+
+        RateLimiter::for('inquiry', fn (Request $request) => Limit::perMinute(6)->by($request->ip()));
 
         View::composer(['layouts.public', 'pages.*'], function ($view): void {
             $view->with('site', $this->app->make('public.site'));

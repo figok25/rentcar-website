@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,3 +18,10 @@ Route::get('/rental-motor', [VehicleController::class, 'index'])
     ->defaults('kind', 'motor')->name('motor.index');
 Route::get('/rental-motor/{slug}', [VehicleController::class, 'show'])
     ->defaults('kind', 'motor')->name('motor.show');
+
+Route::get('/syarat-sewa', [PageController::class, 'requirements'])->name('requirements');
+Route::get('/kontak', [PageController::class, 'contact'])->name('contact');
+
+// Rencana sewa -> pesan WhatsApp (tanpa booking, tanpa penyimpanan data).
+Route::post('/tanya-via-whatsapp', [InquiryController::class, 'store'])
+    ->middleware('throttle:inquiry')->name('inquiry.store');

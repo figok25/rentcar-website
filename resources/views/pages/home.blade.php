@@ -123,6 +123,50 @@
         </section>
     @endif
 
+    {{-- Testimoni --}}
+    @if ($testimonials->isNotEmpty())
+        <section class="mx-auto max-w-6xl px-4 py-12" aria-labelledby="h-testimoni">
+            <h2 id="h-testimoni" class="text-3xl mb-6">Kata pelanggan</h2>
+            <ul class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                @foreach ($testimonials as $testimonial)
+                    <li class="bg-white border border-line rounded-xl p-5 flex flex-col">
+                        @if ($testimonial->rating)
+                            <p class="text-plate-ink" role="img" aria-label="Bintang {{ $testimonial->rating }} dari 5">
+                                <span aria-hidden="true">{{ str_repeat('★', $testimonial->rating) }}<span class="text-line">{{ str_repeat('★', 5 - $testimonial->rating) }}</span></span>
+                            </p>
+                        @endif
+                        <blockquote class="mt-2 text-road flex-1">&ldquo;{{ $testimonial->content }}&rdquo;</blockquote>
+                        <p class="mt-4 text-sm font-semibold">{{ $testimonial->customer_display_name }}
+                            @if ($testimonial->source_label)
+                                <span class="font-normal text-road-soft">&middot; {{ $testimonial->source_label }}</span>
+                            @endif
+                        </p>
+                    </li>
+                @endforeach
+            </ul>
+        </section>
+    @endif
+
+    {{-- FAQ --}}
+    @if ($faqs->isNotEmpty())
+        <section class="bg-white border-y border-line" aria-labelledby="h-faq">
+            <div class="mx-auto max-w-3xl px-4 py-12">
+                <h2 id="h-faq" class="text-3xl mb-6">Pertanyaan yang sering diajukan</h2>
+                <div class="border border-line rounded-xl divide-y divide-line">
+                    @foreach ($faqs as $faq)
+                        <details class="group p-4">
+                            <summary class="cursor-pointer font-semibold flex items-center justify-between gap-4 list-none">
+                                <span>{{ $faq->question }}</span>
+                                <span aria-hidden="true" class="text-road-soft group-open:rotate-45 transition-transform">+</span>
+                            </summary>
+                            <p class="mt-2 text-road-soft">{!! nl2br(e($faq->answer)) !!}</p>
+                        </details>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
     {{-- Ajakan konsultasi --}}
     @if ($site['whatsapp'])
         <section class="mx-auto max-w-6xl px-4 py-12">

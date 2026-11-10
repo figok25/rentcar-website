@@ -115,11 +115,7 @@
                 </section>
 
                 @if ($waUrl)
-                    <div class="bg-white border border-line rounded-xl p-4">
-                        <p class="font-semibold">Tertarik dengan unit ini?</p>
-                        <p class="text-sm text-road-soft mt-1">Tanyakan ketersediaan dan harga final langsung ke admin.</p>
-                        <a href="{{ $waUrl }}" target="_blank" rel="noopener" class="btn btn-wa w-full mt-3">Tanya lewat WhatsApp</a>
-                    </div>
+                    @include('partials.rental-inquiry-form', ['vehicle' => $vehicle])
                 @endif
             </div>
         </div>

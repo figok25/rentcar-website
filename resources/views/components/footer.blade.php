@@ -16,6 +16,8 @@
                 @if ($site['showMotor'])
                     <li><a class="hover:text-white" href="{{ route('motor.index') }}">Rental Motor</a></li>
                 @endif
+                <li><a class="hover:text-white" href="{{ route('requirements') }}">Syarat Sewa</a></li>
+                <li><a class="hover:text-white" href="{{ route('contact') }}">Kontak</a></li>
             </ul>
         </nav>
 

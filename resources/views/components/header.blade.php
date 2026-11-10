@@ -7,6 +7,8 @@
     if ($site['showMotor']) {
         $nav[] = ['label' => 'Rental Motor', 'href' => route('motor.index'), 'active' => request()->routeIs('motor.*')];
     }
+    $nav[] = ['label' => 'Syarat Sewa', 'href' => route('requirements'), 'active' => request()->routeIs('requirements')];
+    $nav[] = ['label' => 'Kontak', 'href' => route('contact'), 'active' => request()->routeIs('contact')];
 @endphp
 <header class="bg-white border-b border-line sticky top-0 z-40" x-data="{ open: false }" @keydown.escape.window="open = false">
     <div class="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between gap-4">

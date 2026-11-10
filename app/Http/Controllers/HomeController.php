@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Enums\CatalogKind;
 use App\Models\Advantage;
+use App\Models\Faq;
 use App\Models\Motto;
+use App\Models\Testimonial;
 use App\Models\VehicleCategory;
 use App\Models\WebsiteSetting;
 use App\Services\VehicleCatalog;
@@ -37,6 +39,8 @@ class HomeController extends Controller
             'categories' => $categories,
             'mottos' => Motto::query()->where('is_active', true)->orderBy('sort_order')->limit(3)->get(),
             'advantages' => Advantage::query()->where('is_active', true)->orderBy('sort_order')->get(),
+            'faqs' => Faq::query()->active()->ordered()->limit(8)->get(),
+            'testimonials' => Testimonial::query()->published()->ordered()->limit(6)->get(),
             'heroTitle' => WebsiteSetting::get('hero_title'),
             'heroSubtitle' => WebsiteSetting::get('hero_subtitle'),
             'heroImage' => $this->heroImageUrl() ?? $featured->first()?->primaryImage?->url(),
