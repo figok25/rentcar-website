@@ -7,9 +7,11 @@ use App\Models\Advantage;
 use App\Models\Faq;
 use App\Models\Motto;
 use App\Models\Testimonial;
+use App\Models\Tour;
 use App\Models\VehicleCategory;
 use App\Models\WebsiteSetting;
 use App\Services\VehicleCatalog;
+use App\Support\Features;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
@@ -39,6 +41,9 @@ class HomeController extends Controller
             'categories' => $categories,
             'mottos' => Motto::query()->where('is_active', true)->orderBy('sort_order')->limit(3)->get(),
             'advantages' => Advantage::query()->where('is_active', true)->orderBy('sort_order')->get(),
+            'tours' => Features::tours()
+                ? Tour::query()->published()->featured()->with('primaryImage')->ordered()->limit(3)->get()
+                : collect(),
             'faqs' => Faq::query()->active()->ordered()->limit(8)->get(),
             'testimonials' => Testimonial::query()->published()->ordered()->limit(6)->get(),
             'heroTitle' => WebsiteSetting::get('hero_title'),

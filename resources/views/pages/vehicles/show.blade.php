@@ -189,3 +189,10 @@
         @endif
     </div>
 @endsection
+
+@push('jsonld')
+    <x-json-ld :data="\App\Support\StructuredData::graph([
+        \App\Support\StructuredData::vehicle($vehicle),
+        \App\Support\StructuredData::breadcrumbs([['Beranda', route('home')], [$kind->title(), route($kind->indexRoute())], [$vehicle->name, $vehicle->publicUrl()]]),
+    ])" />
+@endpush

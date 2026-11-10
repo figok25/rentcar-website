@@ -162,10 +162,10 @@ class ManageWebsiteSettings extends Page
                             ->helperText('Aktifkan /rental-motor. Unit motor memakai kategori dengan slug "motor".'),
                         Toggle::make('feature_tours_enabled')
                             ->label('Paket wisata')
-                            ->helperText('Halamannya dibuat di Phase 5.'),
+                            ->helperText('Aktifkan /paket-wisata. Menu tampil setelah ada paket yang dipublikasikan.'),
                         Toggle::make('feature_travel_enabled')
                             ->label('Layanan travel')
-                            ->helperText('Halamannya dibuat di Phase 5.'),
+                            ->helperText('Aktifkan /travel. Menu tampil setelah ada layanan yang dipublikasikan.'),
                     ]),
             ])
             ->statePath('data');

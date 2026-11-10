@@ -1,4 +1,4 @@
-@props(['vehicle', 'whatsapp' => null])
+@props(['vehicle', 'whatsapp' => null, 'heading' => 'h3'])
 @php
     $url = $vehicle->publicUrl();
     $image = $vehicle->primaryImage;
@@ -23,9 +23,9 @@
         </div>
 
         <div>
-            <h3 class="text-xl leading-tight">
+            <{{ $heading }} class="text-xl leading-tight">
                 <a href="{{ $url }}" class="hover:underline">{{ $vehicle->name }}</a>
-            </h3>
+            </{{ $heading }}>
             <p class="text-sm text-road-soft mt-1">
                 {{ collect([$vehicle->brand, $vehicle->category?->name])->filter()->implode(', ') }}
             </p>

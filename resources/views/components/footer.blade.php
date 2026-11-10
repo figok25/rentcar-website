@@ -16,6 +16,12 @@
                 @if ($site['showMotor'])
                     <li><a class="hover:text-white" href="{{ route('motor.index') }}">Rental Motor</a></li>
                 @endif
+                @if ($site['showTours'])
+                    <li><a class="hover:text-white" href="{{ route('tours.index') }}">Paket Wisata</a></li>
+                @endif
+                @if ($site['showTravel'])
+                    <li><a class="hover:text-white" href="{{ route('travel.index') }}">Travel</a></li>
+                @endif
                 <li><a class="hover:text-white" href="{{ route('requirements') }}">Syarat Sewa</a></li>
                 <li><a class="hover:text-white" href="{{ route('contact') }}">Kontak</a></li>
             </ul>

@@ -15,7 +15,15 @@
     @if ($metaDescription !== '')
         <meta name="description" content="{{ $metaDescription }}">
     @endif
-    <link rel="canonical" href="{{ url()->current() }}">
+    @php
+        // Halaman 2+ memakai kanonikal sendiri; parameter filter tidak ikut.
+        $canonical = url()->current().(request()->integer('page') > 1 ? '?page='.request()->integer('page') : '');
+        $robots = ! config('seo.indexable') ? 'noindex,nofollow' : trim($__env->yieldContent('robots'));
+    @endphp
+    @if ($robots !== '')
+        <meta name="robots" content="{{ $robots }}">
+    @endif
+    <link rel="canonical" href="{{ $canonical }}">
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{ $site['name'] }}">
@@ -23,7 +31,8 @@
     @if ($metaDescription !== '')
         <meta property="og:description" content="{{ $metaDescription }}">
     @endif
-    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:url" content="{{ $canonical }}">
+    <meta property="og:locale" content="id_ID">
     @if ($metaImage !== '')
         <meta property="og:image" content="{{ $metaImage }}">
     @endif
@@ -34,6 +43,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
     @stack('head')
+    @stack('jsonld')
 </head>
 <body class="min-h-screen flex flex-col antialiased">
     <a href="#konten" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-3">Lewati ke konten</a>

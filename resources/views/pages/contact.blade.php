@@ -56,3 +56,10 @@
         </div>
     </div>
 @endsection
+
+@push('jsonld')
+    <x-json-ld :data="\App\Support\StructuredData::graph([
+        \App\Support\StructuredData::business($site),
+        \App\Support\StructuredData::breadcrumbs([['Beranda', route('home')], ['Kontak', route('contact')]]),
+    ])" />
+@endpush

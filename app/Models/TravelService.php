@@ -35,6 +35,11 @@ class TravelService extends Model
         ];
     }
 
+    public function publicUrl(): string
+    {
+        return route('travel.show', $this->slug);
+    }
+
     public function scopePublished(Builder $query): Builder
     {
         return $query->where('is_published', true);

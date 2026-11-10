@@ -63,7 +63,7 @@
         @else
             <div class="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($vehicles as $vehicle)
-                    <x-vehicle-card :vehicle="$vehicle" />
+                    <x-vehicle-card :vehicle="$vehicle" heading="h2" />
                 @endforeach
             </div>
 
@@ -73,3 +73,11 @@
         @endif
     </div>
 @endsection
+
+@if ($hasFilters)
+    @section('robots', 'noindex,follow')
+@endif
+
+@push('jsonld')
+    <x-json-ld :data="\App\Support\StructuredData::graph([\App\Support\StructuredData::breadcrumbs([['Beranda', route('home')], [$kind->title(), route($kind->indexRoute())]])])" />
+@endpush

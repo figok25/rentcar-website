@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[Fillable([
     'title',
@@ -30,6 +31,14 @@ class Tour extends Model
     /** @use HasFactory<TourFactory> */
     use HasFactory;
 
+    protected static function booted(): void
+    {
+        // Tabel foto dihapus berantai oleh database; hapus file fisiknya lewat model.
+        static::deleting(function (Tour $tour): void {
+            $tour->images->each->delete();
+        });
+    }
+
     protected function casts(): array
     {
         return [
@@ -43,6 +52,46 @@ class Tour extends Model
     public function images(): HasMany
     {
         return $this->hasMany(TourImage::class)->orderBy('sort_order')->orderBy('id');
+    }
+
+    public function primaryImage(): HasOne
+    {
+        return $this->hasOne(TourImage::class)
+            ->where('is_primary', true)
+            ->orderBy('sort_order')
+            ->orderBy('id');
+    }
+
+    public function publicUrl(): string
+    {
+        return route('tours.show', $this->slug);
+    }
+
+    /**
+     * Pastikan tepat satu foto utama (pertama jika admin tidak menandai).
+     */
+    public function normalizePrimaryImage(): void
+    {
+        $images = $this->images()->get();
+
+        if ($images->isEmpty()) {
+            return;
+        }
+
+        $primary = $images->firstWhere('is_primary', true) ?? $images->first();
+
+        foreach ($images as $image) {
+            $shouldBePrimary = $image->is($primary);
+
+            if ($image->is_primary !== $shouldBePrimary) {
+                $image->forceFill(['is_primary' => $shouldBePrimary])->saveQuietly();
+            }
+        }
+    }
+
+    public function scopeFeatured(Builder $query): Builder
+    {
+        return $query->where('is_featured', true);
     }
 
     public function scopePublished(Builder $query): Builder

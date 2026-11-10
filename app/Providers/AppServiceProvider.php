@@ -3,9 +3,12 @@
 namespace App\Providers;
 
 use App\Enums\CatalogKind;
+use App\Models\Tour;
+use App\Models\TravelService;
 use App\Models\WebsiteSetting;
 use App\Services\VehicleCatalog;
 use App\Services\WhatsAppLink;
+use App\Support\Features;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -38,6 +41,8 @@ class AppServiceProvider extends ServiceProvider
             'facebook' => WebsiteSetting::get('facebook_url'),
             'footerText' => WebsiteSetting::get('footer_description'),
             'whatsapp' => WhatsAppLink::url(),
+            'showTours' => Features::tours() && Tour::query()->published()->exists(),
+            'showTravel' => Features::travel() && TravelService::query()->published()->exists(),
             'showMotor' => VehicleCatalog::motorEnabled()
                 && (new VehicleCatalog)->visible(CatalogKind::Motor)->exists(),
         ]);

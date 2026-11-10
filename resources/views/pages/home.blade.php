@@ -104,6 +104,21 @@
         </section>
     @endif
 
+    {{-- Paket wisata unggulan --}}
+    @if ($tours->isNotEmpty())
+        <section class="mx-auto max-w-6xl px-4 py-12" aria-labelledby="h-wisata">
+            <div class="flex items-end justify-between gap-4 mb-6">
+                <h2 id="h-wisata" class="text-3xl">Paket wisata</h2>
+                <a href="{{ route('tours.index') }}" class="font-semibold underline">Semua paket</a>
+            </div>
+            <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach ($tours as $tour)
+                    <x-tour-card :tour="$tour" />
+                @endforeach
+            </div>
+        </section>
+    @endif
+
     {{-- Keunggulan --}}
     @if ($advantages->isNotEmpty())
         <section class="bg-white border-y border-line" aria-labelledby="h-keunggulan">
@@ -180,3 +195,7 @@
         </section>
     @endif
 @endsection
+
+@push('jsonld')
+    <x-json-ld :data="\App\Support\StructuredData::graph([\App\Support\StructuredData::business($site), \App\Support\StructuredData::website($site['name']), \App\Support\StructuredData::faq($faqs)])" />
+@endpush
