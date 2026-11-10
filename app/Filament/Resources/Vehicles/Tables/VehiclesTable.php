@@ -39,7 +39,7 @@ class VehiclesTable
                 TextColumn::make('starting_price')
                     ->label('Mulai dari')
                     ->state(fn (Vehicle $record): ?int => $record->activeRates->min('price_per_day'))
-                    ->money('IDR', locale: 'id')
+                    ->money('IDR', locale: 'id', decimalPlaces: 0)
                     ->placeholder('-'),
                 ToggleColumn::make('is_published')->label('Tampil'),
                 IconColumn::make('is_featured')->label('Unggulan')->boolean(),

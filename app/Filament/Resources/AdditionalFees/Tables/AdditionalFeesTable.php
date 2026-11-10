@@ -16,7 +16,7 @@ class AdditionalFeesTable
         return $table
             ->columns([
                 TextColumn::make('name')->label('Nama biaya')->searchable(),
-                TextColumn::make('amount')->label('Nominal')->money('IDR', locale: 'id')->sortable(),
+                TextColumn::make('amount')->label('Nominal')->money('IDR', locale: 'id', decimalPlaces: 0)->sortable(),
                 TextColumn::make('sort_order')->label('Urutan')->sortable(),
                 IconColumn::make('is_active')->label('Aktif')->boolean(),
             ])

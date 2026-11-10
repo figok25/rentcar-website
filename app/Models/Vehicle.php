@@ -107,6 +107,20 @@ class Vehicle extends Model
         return $query->orderBy('sort_order')->orderBy('name');
     }
 
+    public function isMotor(): bool
+    {
+        return $this->category?->slug === VehicleCategory::MOTOR_SLUG;
+    }
+
+    /**
+     * URL publik detail kendaraan (mobil -> /rental-mobil, motor -> /rental-motor).
+     * Pastikan relasi `category` sudah dimuat untuk menghindari N+1.
+     */
+    public function publicUrl(): string
+    {
+        return route($this->isMotor() ? 'motor.show' : 'vehicles.show', $this->slug);
+    }
+
     public function scopeWithStatus(Builder $query, VehicleStatus $status): Builder
     {
         return $query->where('status', $status->value);

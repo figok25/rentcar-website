@@ -3,7 +3,128 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
+/*
+ * Identitas visual: plat kuning kendaraan sewa di Indonesia.
+ * Warna dan bentuk plat dipakai di hero dan label harga; sisanya sengaja tenang.
+ */
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    /* Bahnschrift (Windows) bergaya huruf rambu jalan; font lain jadi cadangan. */
+    --font-display: 'Bahnschrift', 'DIN Alternate', 'Arial Narrow', 'Segoe UI Semibold', system-ui, sans-serif;
+
+    --color-plate: #f7c600;
+    --color-plate-dark: #d9ab00;
+    --color-plate-ink: #151515;
+    --color-paper: #f4f6f7;
+    --color-road: #2b333b;
+    --color-road-soft: #5c6670;
+    --color-line: #dde2e6;
+    --color-sign-green: #0b6e4f;
+    --color-sign-green-dark: #085a41;
+    --color-sign-blue: #1d4e89;
+    --color-sign-red: #b3261e;
+    --color-sign-amber: #8a5a00;
+}
+
+@layer base {
+    [x-cloak] {
+        display: none !important;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: var(--font-sans);
+        background: var(--color-paper);
+        color: var(--color-road);
+    }
+
+    h1, h2, h3 {
+        font-family: var(--font-display);
+        letter-spacing: -0.01em;
+    }
+
+    :focus-visible {
+        outline: 3px solid var(--color-sign-blue);
+        outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+        * {
+            transition-duration: 0.01ms !important;
+            animation-duration: 0.01ms !important;
+        }
+    }
+}
+
+@layer components {
+    /* Plat nomor: kuning, huruf hitam, bingkai ganda. */
+    .plate {
+        background: var(--color-plate);
+        color: var(--color-plate-ink);
+        border: 3px solid var(--color-plate-ink);
+        border-radius: 0.75rem;
+        box-shadow: inset 0 0 0 2px var(--color-plate), inset 0 0 0 3.5px var(--color-plate-ink);
+        font-family: var(--font-display);
+        font-weight: 700;
+    }
+
+    .plate-sm {
+        border-width: 2px;
+        border-radius: 0.5rem;
+        box-shadow: inset 0 0 0 1.5px var(--color-plate), inset 0 0 0 2.5px var(--color-plate-ink);
+    }
+
+    .field {
+        width: 100%;
+        border-radius: 0.5rem;
+        border: 1px solid #b9c1c8;
+        background: #fff;
+        padding: 0.625rem 0.75rem;
+        font-size: 1rem;
+        color: var(--color-road);
+        min-height: 2.75rem;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        min-height: 2.75rem;
+        padding: 0.5rem 1.25rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        transition: background-color 0.15s, border-color 0.15s;
+    }
+
+    .btn-primary {
+        background: var(--color-plate-ink);
+        color: #fff;
+    }
+    .btn-primary:hover {
+        background: var(--color-road);
+    }
+
+    .btn-outline {
+        border: 1.5px solid var(--color-plate-ink);
+        color: var(--color-plate-ink);
+        background: transparent;
+    }
+    .btn-outline:hover {
+        background: #fff;
+    }
+
+    .btn-wa {
+        background: var(--color-sign-green);
+        color: #fff;
+    }
+    .btn-wa:hover {
+        background: var(--color-sign-green-dark);
+    }
 }
