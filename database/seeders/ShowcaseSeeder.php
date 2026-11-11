@@ -19,6 +19,7 @@ use App\Models\VehicleCategory;
 use App\Models\WebsiteSetting;
 use Database\Seeders\Support\PlaceholderArt;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -130,10 +131,40 @@ class ShowcaseSeeder extends Seeder
                 ]);
             }
 
+            $this->vehicleImages($vehicle, $slug, $shape, $color, $name, $i);
+        }
+    }
+
+    /**
+     * Foto asli dari database/seeders/photos/vehicles/{slug}.jpg (opsional {slug}-2.jpg, dst.).
+     * Unit tanpa foto asli memakai ilustrasi placeholder.
+     */
+    private function vehicleImages(Vehicle $vehicle, string $slug, string $shape, string $color, string $name, int $i): void
+    {
+        $files = collect(File::glob(database_path("seeders/photos/vehicles/{$slug}{,-[0-9]*}.{jpg,jpeg,png,webp}"), GLOB_BRACE))
+            ->sort(SORT_NATURAL)
+            ->values();
+
+        $paths = [];
+
+        if ($files->isNotEmpty()) {
+            foreach ($files as $n => $file) {
+                $path = "vehicles/showcase/{$slug}-".($n + 1).'.'.pathinfo($file, PATHINFO_EXTENSION);
+                Storage::disk('public')->put($path, File::get($file));
+                $paths[] = $path;
+
+                $vehicle->images()->updateOrCreate(['image_path' => $path], [
+                    'alt_text' => $name.($n === 0 ? '' : ' foto '.($n + 1)),
+                    'is_primary' => $n === 0,
+                    'sort_order' => $n + 1,
+                ]);
+            }
+        } else {
             $subtitle = $vehicle->category()->value('name');
             foreach ([0, 1] as $n) {
                 $path = "vehicles/showcase/{$slug}-".($n + 1).'.svg';
                 Storage::disk('public')->put($path, PlaceholderArt::vehicle($shape, $color, $name, $subtitle, $n === 1, $i + $n));
+                $paths[] = $path;
 
                 $vehicle->images()->updateOrCreate(['image_path' => $path], [
                     'alt_text' => $name.($n === 0 ? ' tampak samping' : ' tampak sisi lain'),
@@ -142,6 +173,9 @@ class ShowcaseSeeder extends Seeder
                 ]);
             }
         }
+
+        // Bersihkan foto lama (mis. ilustrasi) yang sudah digantikan.
+        $vehicle->images()->whereNotIn('image_path', $paths)->get()->each->delete();
     }
 
     private function vehicleDescription(string $name, int $seats, string $shape): string

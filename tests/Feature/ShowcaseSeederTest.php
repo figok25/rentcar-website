@@ -24,7 +24,9 @@ class ShowcaseSeederTest extends TestCase
         $this->seed(ShowcaseSeeder::class);
 
         $this->assertSame(14, Vehicle::count());
-        $this->assertSame(28, VehicleImage::count());
+        // Unit dengan foto asli di database/seeders/photos/vehicles punya 1 foto; sisanya 2 ilustrasi.
+        $real = count(glob(database_path('seeders/photos/vehicles/*.jpg')));
+        $this->assertSame($real + (14 - $real) * 2, VehicleImage::count());
         $this->assertGreaterThanOrEqual(4, Tour::count());
         $this->assertGreaterThanOrEqual(4, TravelService::count());
         $this->assertGreaterThanOrEqual(5, Faq::count());
