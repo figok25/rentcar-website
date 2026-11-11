@@ -13,7 +13,7 @@
 
 @section('content')
     <div class="bg-white border-b border-line">
-        <div class="mx-auto max-w-6xl px-4 py-8 md:py-10">
+        <div class="container-page py-8 md:py-10">
             <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-3">
                 <a href="{{ route('home') }}" class="hover:underline">Beranda</a>
                 <span aria-hidden="true">/</span>
@@ -24,14 +24,14 @@
         </div>
     </div>
 
-    <div class="mx-auto max-w-6xl px-4 py-8">
+    <div class="container-page py-8">
         <div x-data="{ open: {{ $hasFilters ? 'true' : 'false' }} }">
             <button type="button" class="btn btn-outline lg:hidden w-full" @click="open = !open"
                     :aria-expanded="open.toString()" aria-controls="panel-filter">
                 <span x-text="open ? 'Sembunyikan filter' : 'Tampilkan filter'">Tampilkan filter</span>
             </button>
 
-            <div id="panel-filter" class="mt-4 lg:mt-0 bg-white border border-line rounded-xl p-4 lg:block!" x-show="open" x-cloak>
+            <div id="panel-filter" class="mt-4 lg:mt-0 card p-4 lg:block!" x-show="open" x-cloak>
                 @include('partials.vehicle-filters', [
                     'action' => route($kind->indexRoute()),
                     'filters' => $filters,
@@ -47,7 +47,7 @@
         </p>
 
         @if ($vehicles->isEmpty())
-            <div class="mt-4 bg-white border border-dashed border-line rounded-xl p-10 text-center">
+            <div class="mt-4 bg-white border border-dashed border-line rounded-2xl p-10 text-center">
                 @if ($hasFilters)
                     <h2 class="text-2xl">Tidak ada kendaraan yang cocok</h2>
                     <p class="mt-2 text-road-soft">Coba longgarkan filter atau hapus kata kunci pencarian.</p>

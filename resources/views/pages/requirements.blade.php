@@ -4,7 +4,7 @@
 @section('description', 'Syarat dan ketentuan sewa kendaraan. Ketersediaan dan harga final dikonfirmasi admin lewat WhatsApp.')
 
 @section('content')
-    <div class="mx-auto max-w-4xl px-4 py-8">
+    <div class="container-page container-narrow py-8">
         <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-4">
             <a href="{{ route('home') }}" class="hover:underline">Beranda</a>
             <span aria-hidden="true">/</span>
@@ -22,7 +22,7 @@
                 @if ($group->description)
                     <p class="mt-1 text-road-soft">{{ $group->description }}</p>
                 @endif
-                <ul class="mt-3 bg-white border border-line rounded-xl divide-y divide-line">
+                <ul class="mt-3 card divide-y divide-line">
                     @foreach ($group->requirements as $requirement)
                         <li class="p-4 flex gap-3">
                             <span aria-hidden="true" class="mt-2 size-2 rounded-full bg-plate shrink-0 ring-1 ring-plate-ink"></span>
@@ -32,7 +32,7 @@
                 </ul>
             </section>
         @empty
-            <p class="mt-8 bg-white border border-line rounded-xl p-6 text-road-soft">Syarat sewa belum dipublikasikan. Silakan tanyakan langsung kepada kami.</p>
+            <p class="mt-8 card p-6 text-road-soft">Syarat sewa belum dipublikasikan. Silakan tanyakan langsung kepada kami.</p>
         @endforelse
 
         @if ($site['whatsapp'])

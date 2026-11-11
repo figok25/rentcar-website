@@ -9,32 +9,45 @@
 @section('content')
     {{-- Hero --}}
     <section class="bg-white border-b border-line">
-        <div class="mx-auto max-w-6xl px-4 pt-10 pb-12 md:pt-16 md:pb-16 grid gap-8 lg:grid-cols-2 lg:items-center">
+        <div class="container-page pt-10 pb-12 md:pt-16 md:pb-16 grid gap-8 lg:grid-cols-2 lg:items-center">
             <div>
-                <x-plate as="h1" class="inline-block px-5 py-4 text-3xl sm:text-4xl md:text-5xl leading-tight">
+                <x-plate as="h1" class="inline-block px-5 py-4 text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight">
                     {{ $heroTitle ?: 'Sewa Kendaraan Mudah dan Terpercaya' }}
                 </x-plate>
                 @if ($heroSubtitle)
                     <p class="mt-5 text-lg text-road-soft max-w-prose">{{ $heroSubtitle }}</p>
                 @endif
-                <div class="mt-6 flex flex-wrap gap-3">
+                <div class="mt-7 flex flex-wrap gap-3">
                     <a href="{{ route('vehicles.index') }}" class="btn btn-primary">Lihat armada</a>
                     @if ($site['whatsapp'])
                         <a href="{{ $site['whatsapp'] }}" target="_blank" rel="noopener" class="btn btn-wa">Chat WhatsApp</a>
                     @endif
                 </div>
+                @if ($advantages->isNotEmpty())
+                    <ul class="mt-6 space-y-2 text-sm font-semibold text-road">
+                        @foreach ($advantages->take(3) as $advantage)
+                            <li class="flex items-center gap-2.5">
+                                <span class="grid size-5 shrink-0 place-items-center rounded-full bg-sign-green text-white" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" class="size-3.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m4.5 10.5 3.5 3.5 7.5-8"/></svg>
+                                </span>
+                                {{ $advantage->title }}
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
             </div>
 
             @if ($heroImage)
-                <div class="rounded-xl overflow-hidden border border-line bg-paper aspect-[4/3]">
+                <div class="rounded-2xl overflow-hidden border border-line bg-paper aspect-[4/3]">
                     <img src="{{ $heroImage }}" alt="Unit kendaraan {{ $site['name'] }}" class="size-full object-cover">
                 </div>
             @endif
         </div>
 
-        {{-- Jalur kuning: pencarian kendaraan --}}
-        <div class="bg-plate border-t-4 border-plate-ink">
-            <div class="mx-auto max-w-6xl px-4 py-6">
+        {{-- Pencarian kendaraan: kartu melayang di tepi bawah hero --}}
+        <div class="container-page pb-10">
+            <div class="card filter-card p-5 sm:p-6">
+                <p class="font-display text-xl font-bold mb-4">Temukan unit yang cocok</p>
                 @include('partials.vehicle-filters', [
                     'action' => route('vehicles.index'),
                     'filters' => $filters,
@@ -47,7 +60,7 @@
 
     {{-- Motto --}}
     @if ($mottos->isNotEmpty())
-        <section class="mx-auto max-w-6xl px-4 py-12" aria-label="Janji layanan">
+        <section class="container-page py-12" aria-label="Janji layanan">
             @php
                 $cols = [1 => 'md:grid-cols-1', 2 => 'md:grid-cols-2', 3 => 'md:grid-cols-3'][min($mottos->count(), 3)];
             @endphp
@@ -66,7 +79,7 @@
 
     {{-- Unit unggulan --}}
     @if ($featured->isNotEmpty())
-        <section class="mx-auto max-w-6xl px-4 py-8" aria-labelledby="h-unggulan">
+        <section class="container-page py-8" aria-labelledby="h-unggulan">
             <div class="flex items-end justify-between gap-4 mb-6">
                 <h2 id="h-unggulan" class="text-3xl">Unit pilihan</h2>
                 <a href="{{ route('vehicles.index') }}" class="font-semibold underline underline-offset-4">Lihat semua armada</a>
@@ -81,7 +94,7 @@
 
     {{-- Kategori --}}
     @if ($categories->isNotEmpty())
-        <section class="mx-auto max-w-6xl px-4 py-12" aria-labelledby="h-kategori">
+        <section class="container-page py-12" aria-labelledby="h-kategori">
             <h2 id="h-kategori" class="text-3xl mb-6">Pilih jenis kendaraan</h2>
             <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 @foreach ($categories as $category)
@@ -91,7 +104,7 @@
                             : route('vehicles.index', ['category' => $category->slug]);
                     @endphp
                     <li>
-                        <a href="{{ $href }}" class="block h-full bg-white border border-line rounded-xl p-5 hover:border-plate-ink">
+                        <a href="{{ $href }}" class="block h-full card p-5 hover:border-plate-ink">
                             <span class="block font-display text-xl">{{ $category->name }}</span>
                             <span class="block mt-1 text-sm text-road-soft">{{ $category->published_vehicles_count }} unit</span>
                             @if ($category->description)
@@ -106,7 +119,7 @@
 
     {{-- Paket wisata unggulan --}}
     @if ($tours->isNotEmpty())
-        <section class="mx-auto max-w-6xl px-4 py-12" aria-labelledby="h-wisata">
+        <section class="container-page py-12" aria-labelledby="h-wisata">
             <div class="flex items-end justify-between gap-4 mb-6">
                 <h2 id="h-wisata" class="text-3xl">Paket wisata</h2>
                 <a href="{{ route('tours.index') }}" class="font-semibold underline">Semua paket</a>
@@ -122,7 +135,7 @@
     {{-- Keunggulan --}}
     @if ($advantages->isNotEmpty())
         <section class="bg-white border-y border-line" aria-labelledby="h-keunggulan">
-            <div class="mx-auto max-w-6xl px-4 py-12">
+            <div class="container-page py-12">
                 <h2 id="h-keunggulan" class="text-3xl mb-6">Kenapa memilih kami</h2>
                 <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($advantages as $advantage)
@@ -138,13 +151,28 @@
         </section>
     @endif
 
+    {{-- Galeri --}}
+    @if ($gallery->count() >= 4)
+        <section class="container-page py-12" aria-labelledby="h-galeri">
+            <h2 id="h-galeri" class="text-3xl mb-6">Galeri armada</h2>
+            <ul class="grid grid-cols-2 gap-3 md:grid-cols-4">
+                @foreach ($gallery->take(intdiv($gallery->count(), 4) * 4) as $photo)
+                    <li class="group relative overflow-hidden rounded-2xl border border-line bg-white aspect-[4/3]">
+                        <img src="{{ $photo->url() }}" alt="{{ $photo->alt_text ?: $photo->vehicle?->name }}" loading="lazy"
+                             class="size-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </li>
+                @endforeach
+            </ul>
+        </section>
+    @endif
+
     {{-- Testimoni --}}
     @if ($testimonials->isNotEmpty())
-        <section class="mx-auto max-w-6xl px-4 py-12" aria-labelledby="h-testimoni">
+        <section class="container-page py-12" aria-labelledby="h-testimoni">
             <h2 id="h-testimoni" class="text-3xl mb-6">Kata pelanggan</h2>
             <ul class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
                 @foreach ($testimonials as $testimonial)
-                    <li class="bg-white border border-line rounded-xl p-5 flex flex-col">
+                    <li class="card p-5 flex flex-col">
                         @if ($testimonial->rating)
                             <p class="text-plate-ink" role="img" aria-label="Bintang {{ $testimonial->rating }} dari 5">
                                 <span aria-hidden="true">{{ str_repeat('★', $testimonial->rating) }}<span class="text-line">{{ str_repeat('★', 5 - $testimonial->rating) }}</span></span>
@@ -165,9 +193,9 @@
     {{-- FAQ --}}
     @if ($faqs->isNotEmpty())
         <section class="bg-white border-y border-line" aria-labelledby="h-faq">
-            <div class="mx-auto max-w-3xl px-4 py-12">
+            <div class="container-page container-text py-12">
                 <h2 id="h-faq" class="text-3xl mb-6">Pertanyaan yang sering diajukan</h2>
-                <div class="border border-line rounded-xl divide-y divide-line">
+                <div class="card divide-y divide-line">
                     @foreach ($faqs as $faq)
                         <details class="group p-4">
                             <summary class="cursor-pointer font-semibold flex items-center justify-between gap-4 list-none">
@@ -182,10 +210,41 @@
         </section>
     @endif
 
+    {{-- Lokasi --}}
+    @if ($site['address'] || $mapsUrl)
+        <section class="container-page py-12" aria-labelledby="h-lokasi">
+            <h2 id="h-lokasi" class="text-3xl mb-6">Kunjungi lokasi kami</h2>
+            <div class="grid gap-6 lg:grid-cols-5">
+                <div class="card p-6 lg:col-span-2 self-start">
+                    @if ($site['address'])
+                        <p class="text-sm text-road-soft">Alamat</p>
+                        <p class="mt-1 text-lg font-semibold">{{ $site['address'] }}</p>
+                    @endif
+                    @if ($site['phone'])
+                        <p class="mt-4 text-sm text-road-soft">Telepon</p>
+                        <p class="mt-1 font-semibold">{{ $site['phone'] }}</p>
+                    @endif
+                    <div class="mt-5 flex flex-wrap gap-2">
+                        @if ($site['whatsapp'])
+                            <a href="{{ $site['whatsapp'] }}" target="_blank" rel="noopener" class="btn btn-wa btn-sm">Chat WhatsApp</a>
+                        @endif
+                        <a href="{{ route('contact') }}" class="btn btn-outline btn-sm">Halaman kontak</a>
+                    </div>
+                </div>
+                @if ($mapsUrl)
+                    <div class="lg:col-span-3 overflow-hidden rounded-2xl border border-line bg-white aspect-[16/10]">
+                        <iframe src="{{ $mapsUrl }}" title="Lokasi {{ $site['name'] }}" class="size-full" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+                    </div>
+                @endif
+            </div>
+        </section>
+    @endif
+
     {{-- Ajakan konsultasi --}}
     @if ($site['whatsapp'])
-        <section class="mx-auto max-w-6xl px-4 py-12">
-            <div class="bg-plate-ink text-white rounded-xl p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <section class="container-page py-12">
+            <div class="bg-plate-ink text-white rounded-2xl p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
                     <h2 class="text-3xl">Belum yakin pilih unit yang mana?</h2>
                     <p class="mt-2 text-white/75 max-w-prose">Ceritakan kebutuhan dan rencana tanggal sewa Anda. Kami bantu cek ketersediaan unit.</p>

@@ -9,6 +9,7 @@ use App\Models\Motto;
 use App\Models\Testimonial;
 use App\Models\Tour;
 use App\Models\VehicleCategory;
+use App\Models\VehicleImage;
 use App\Models\WebsiteSetting;
 use App\Services\VehicleCatalog;
 use App\Support\Features;
@@ -49,6 +50,14 @@ class HomeController extends Controller
             'heroTitle' => WebsiteSetting::get('hero_title'),
             'heroSubtitle' => WebsiteSetting::get('hero_subtitle'),
             'heroImage' => $this->heroImageUrl() ?? $featured->first()?->primaryImage?->url(),
+            'gallery' => VehicleImage::query()
+                ->whereIn('vehicle_id', $catalog->visible()->select('vehicles.id'))
+                ->with('vehicle:id,name')
+                ->orderByDesc('is_primary')
+                ->orderBy('id')
+                ->limit(8)
+                ->get(),
+            'mapsUrl' => WebsiteSetting::mapsEmbedUrl(),
             'filters' => [],
             'options' => $catalog->filterOptions(CatalogKind::Car),
         ]);

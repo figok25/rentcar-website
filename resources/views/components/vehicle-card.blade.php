@@ -5,7 +5,7 @@
     $message = 'Halo, saya tertarik dengan '.$vehicle->name.'. Mohon info ketersediaan dan harganya.';
     $waUrl = \App\Services\WhatsAppLink::url($message);
 @endphp
-<article class="bg-white rounded-xl border border-line overflow-hidden flex flex-col">
+<article class="card card-hover overflow-hidden flex flex-col">
     <a href="{{ $url }}" class="relative block aspect-[4/3] bg-paper" tabindex="-1" aria-hidden="true">
         @if ($image)
             <img src="{{ $image->url() }}" alt="" loading="lazy" class="size-full object-cover">

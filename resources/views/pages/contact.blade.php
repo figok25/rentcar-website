@@ -4,7 +4,7 @@
 @section('description', 'Hubungi '.$site['name'].' untuk menanyakan ketersediaan unit dan harga sewa.')
 
 @section('content')
-    <div class="mx-auto max-w-6xl px-4 py-8">
+    <div class="container-page py-8">
         <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-4">
             <a href="{{ route('home') }}" class="hover:underline">Beranda</a>
             <span aria-hidden="true">/</span>
@@ -13,7 +13,7 @@
         <h1 class="text-4xl md:text-5xl">Kontak</h1>
 
         <div class="mt-6 grid gap-8 lg:grid-cols-2">
-            <div class="bg-white border border-line rounded-xl divide-y divide-line self-start">
+            <div class="card divide-y divide-line self-start">
                 @if ($site['whatsapp'])
                     <div class="p-5">
                         <p class="text-sm text-road-soft">WhatsApp</p>
@@ -48,7 +48,7 @@
             </div>
 
             @if ($mapsUrl)
-                <div class="rounded-xl overflow-hidden border border-line bg-white aspect-[4/3]">
+                <div class="rounded-2xl overflow-hidden border border-line bg-white aspect-[4/3]">
                     <iframe src="{{ $mapsUrl }}" title="Lokasi {{ $site['name'] }}" class="w-full h-full" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
                 </div>

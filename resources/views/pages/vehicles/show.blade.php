@@ -18,7 +18,7 @@
 @endif
 
 @section('content')
-    <div class="mx-auto max-w-6xl px-4 py-6">
+    <div class="container-page py-6">
         <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-4">
             <a href="{{ route('home') }}" class="hover:underline">Beranda</a>
             <span aria-hidden="true">/</span>
@@ -31,7 +31,7 @@
             {{-- Galeri --}}
             <div class="lg:col-span-3" x-data="{ current: 0, items: @js($images->map(fn ($i) => ['src' => $i->url(), 'alt' => $i->alt_text ?: $vehicle->name])->values()) }">
                 @if ($images->isNotEmpty())
-                    <div class="rounded-xl overflow-hidden border border-line bg-white aspect-[4/3]">
+                    <div class="rounded-2xl overflow-hidden border border-line bg-white aspect-[4/3]">
                         <img :src="items[current].src" :alt="items[current].alt" class="size-full object-cover"
                              src="{{ $primary->url() }}" alt="{{ $primary->alt_text ?: $vehicle->name }}">
                     </div>
@@ -51,7 +51,7 @@
                         </ul>
                     @endif
                 @else
-                    <div class="rounded-xl border border-dashed border-line bg-white aspect-[4/3] grid place-items-center text-road-soft">
+                    <div class="rounded-2xl border border-dashed border-line bg-white aspect-[4/3] grid place-items-center text-road-soft">
                         Foto belum tersedia
                     </div>
                 @endif
@@ -68,7 +68,7 @@
 
                 <section aria-labelledby="h-spek">
                     <h2 id="h-spek" class="text-2xl">Spesifikasi</h2>
-                    <dl class="mt-2 bg-white border border-line rounded-xl divide-y divide-line">
+                    <dl class="mt-2 card divide-y divide-line">
                         @foreach ([
                             'Transmisi' => $vehicle->transmission->label(),
                             'Bahan bakar' => $vehicle->fuel_type->label(),
@@ -93,9 +93,9 @@
                     @else
                         <ul class="mt-2 space-y-3">
                             @foreach ($vehicle->activeRates->sortBy(fn ($r) => $r->service_type->value) as $rate)
-                                <li class="bg-white border border-line rounded-xl p-4">
+                                <li class="card p-4">
                                     <div class="flex items-center justify-between gap-3 flex-wrap">
-                                        <h3 class="text-lg">{{ $rate->service_type->label() }}</h3>
+                                        <h3 class="text-xl">{{ $rate->service_type->label() }}</h3>
                                         <x-plate small class="inline-flex items-baseline gap-1 px-3 py-1">
                                             <span class="text-lg">{{ Money::rupiah($rate->price_per_day) }}</span>
                                             <span class="text-sm font-semibold">/hari</span>
@@ -131,7 +131,7 @@
         @if ($fees->isNotEmpty())
             <section class="mt-12" aria-labelledby="h-biaya">
                 <h2 id="h-biaya" class="text-2xl">Biaya tambahan</h2>
-                <div class="mt-3 overflow-x-auto bg-white border border-line rounded-xl">
+                <div class="mt-3 overflow-x-auto card">
                     <table class="w-full text-left">
                         <thead class="border-b border-line text-sm text-road-soft">
                             <tr>
@@ -160,8 +160,8 @@
                 <h2 id="h-syarat" class="text-2xl">Syarat dan ketentuan sewa</h2>
                 <div class="mt-3 grid gap-4 md:grid-cols-2">
                     @foreach ($requirementGroups as $group)
-                        <div class="bg-white border border-line rounded-xl p-5">
-                            <h3 class="text-lg">{{ $group->name }}</h3>
+                        <div class="card p-5">
+                            <h3 class="text-xl">{{ $group->name }}</h3>
                             @if ($group->description)
                                 <p class="text-sm text-road-soft mt-1">{{ $group->description }}</p>
                             @endif

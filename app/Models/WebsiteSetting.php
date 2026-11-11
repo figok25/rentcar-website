@@ -67,6 +67,14 @@ class WebsiteSetting extends Model
         return static::query()->updateOrCreate(['key' => $key], $attributes);
     }
 
+    /** Hanya embed resmi Google Maps yang boleh dipasang di iframe. */
+    public static function mapsEmbedUrl(): ?string
+    {
+        $maps = static::get('maps_embed_url');
+
+        return $maps && str_starts_with($maps, 'https://www.google.com/maps/embed') ? $maps : null;
+    }
+
     public static function flushCache(): void
     {
         Cache::forget(self::CACHE_KEY);

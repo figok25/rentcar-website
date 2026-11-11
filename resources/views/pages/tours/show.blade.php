@@ -20,7 +20,7 @@
 @endif
 
 @section('content')
-    <div class="mx-auto max-w-6xl px-4 py-6">
+    <div class="container-page py-6">
         <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-4">
             <a href="{{ route('home') }}" class="hover:underline">Beranda</a>
             <span aria-hidden="true">/</span>
@@ -32,7 +32,7 @@
         <div class="grid gap-8 lg:grid-cols-5">
             <div class="lg:col-span-3" x-data="{ current: 0, items: @js($images->map(fn ($i) => ['src' => $i->url(), 'alt' => $i->alt_text ?: $tour->title])->values()) }">
                 @if ($images->isNotEmpty())
-                    <div class="rounded-xl overflow-hidden border border-line bg-white aspect-[4/3]">
+                    <div class="rounded-2xl overflow-hidden border border-line bg-white aspect-[4/3]">
                         <img :src="items[current].src" :alt="items[current].alt" class="size-full object-cover"
                              src="{{ $primary->url() }}" alt="{{ $primary->alt_text ?: $tour->title }}">
                     </div>
@@ -52,7 +52,7 @@
                         </ul>
                     @endif
                 @else
-                    <div class="rounded-xl border border-dashed border-line bg-white aspect-[4/3] grid place-items-center text-road-soft">Foto belum tersedia</div>
+                    <div class="rounded-2xl border border-dashed border-line bg-white aspect-[4/3] grid place-items-center text-road-soft">Foto belum tersedia</div>
                 @endif
             </div>
 
@@ -93,7 +93,7 @@
         @if ($itinerary)
             <section class="mt-10 max-w-3xl" aria-labelledby="h-itin">
                 <h2 id="h-itin" class="text-2xl mb-3">Rencana perjalanan</h2>
-                <ol class="bg-white border border-line rounded-xl divide-y divide-line">
+                <ol class="card divide-y divide-line">
                     @foreach ($itinerary as $step)
                         <li class="p-4 flex gap-3">
                             <span class="font-display text-plate-ink bg-plate rounded px-2 h-fit text-sm leading-6" aria-hidden="true">{{ $loop->iteration }}</span>
@@ -109,7 +109,7 @@
                 @if ($included)
                     <section aria-labelledby="h-inc">
                         <h2 id="h-inc" class="text-2xl mb-3">Sudah termasuk</h2>
-                        <ul class="bg-white border border-line rounded-xl divide-y divide-line">
+                        <ul class="card divide-y divide-line">
                             @foreach ($included as $item)
                                 <li class="p-3 flex gap-2"><span aria-hidden="true" class="text-sign-green font-bold">&#10003;</span><span>{{ $item }}</span></li>
                             @endforeach
@@ -119,7 +119,7 @@
                 @if ($excluded)
                     <section aria-labelledby="h-exc">
                         <h2 id="h-exc" class="text-2xl mb-3">Belum termasuk</h2>
-                        <ul class="bg-white border border-line rounded-xl divide-y divide-line">
+                        <ul class="card divide-y divide-line">
                             @foreach ($excluded as $item)
                                 <li class="p-3 flex gap-2"><span aria-hidden="true" class="text-sign-red font-bold">&#10005;</span><span>{{ $item }}</span></li>
                             @endforeach

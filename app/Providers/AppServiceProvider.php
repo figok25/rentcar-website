@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Enums\CatalogKind;
 use App\Models\Tour;
 use App\Models\TravelService;
+use App\Models\VehicleCategory;
 use App\Models\WebsiteSetting;
 use App\Services\VehicleCatalog;
 use App\Services\WhatsAppLink;
@@ -41,6 +42,12 @@ class AppServiceProvider extends ServiceProvider
             'facebook' => WebsiteSetting::get('facebook_url'),
             'footerText' => WebsiteSetting::get('footer_description'),
             'whatsapp' => WhatsAppLink::url(),
+            'navCategories' => VehicleCategory::query()
+                ->active()
+                ->ordered()
+                ->where('slug', '!=', VehicleCategory::MOTOR_SLUG)
+                ->whereHas('vehicles', fn ($q) => $q->published())
+                ->get(['id', 'name', 'slug']),
             'showTours' => Features::tours() && Tour::query()->published()->exists(),
             'showTravel' => Features::travel() && TravelService::query()->published()->exists(),
             'showMotor' => VehicleCatalog::motorEnabled()

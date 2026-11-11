@@ -5,7 +5,7 @@
     $err = fn (string $key) => $errors->first($key);
 @endphp
 <form id="form-sewa" method="POST" action="{{ route('inquiry.store') }}" novalidate
-      class="bg-white border border-line rounded-xl p-4 scroll-mt-24"
+      class="card p-5 scroll-mt-24"
       x-data="{
           start: @js(old('start_date', '')),
           end: @js(old('end_date', '')),
@@ -18,7 +18,7 @@
     @csrf
     <input type="hidden" name="vehicle" value="{{ $vehicle->slug }}">
 
-    <h3 class="font-semibold text-lg">Rencanakan sewa</h3>
+    <h3 class="text-2xl">Rencanakan sewa</h3>
     <p class="text-sm text-road-soft mt-1">Isi rencana Anda, lalu kirim lewat WhatsApp. Ketersediaan dan harga final dikonfirmasi admin; belum ada pemesanan otomatis.</p>
 
     @if ($errors->any())

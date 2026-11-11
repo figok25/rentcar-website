@@ -12,7 +12,7 @@
 @section('description', $description)
 
 @section('content')
-    <div class="mx-auto max-w-4xl px-4 py-6">
+    <div class="container-page container-narrow py-6">
         <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-4">
             <a href="{{ route('home') }}" class="hover:underline">Beranda</a>
             <span aria-hidden="true">/</span>
@@ -50,14 +50,14 @@
         @if ($service->vehicle_information)
             <section class="mt-8" aria-labelledby="h-armada">
                 <h2 id="h-armada" class="text-2xl mb-2">Armada</h2>
-                <p class="bg-white border border-line rounded-xl p-4">{!! nl2br(e($service->vehicle_information)) !!}</p>
+                <p class="card p-4">{!! nl2br(e($service->vehicle_information)) !!}</p>
             </section>
         @endif
 
         @if ($terms)
             <section class="mt-8" aria-labelledby="h-syarat">
                 <h2 id="h-syarat" class="text-2xl mb-3">Syarat dan ketentuan</h2>
-                <ul class="bg-white border border-line rounded-xl divide-y divide-line">
+                <ul class="card divide-y divide-line">
                     @foreach ($terms as $term)
                         <li class="p-4 flex gap-3">
                             <span aria-hidden="true" class="mt-2 size-2 rounded-full bg-plate shrink-0 ring-1 ring-plate-ink"></span>

@@ -23,11 +23,8 @@ class PageController extends Controller
 
     public function contact(): View
     {
-        $maps = WebsiteSetting::get('maps_embed_url');
-
         return view('pages.contact', [
-            // Hanya embed resmi Google Maps yang boleh dipasang di iframe.
-            'mapsUrl' => $maps && str_starts_with($maps, 'https://www.google.com/maps/embed') ? $maps : null,
+            'mapsUrl' => WebsiteSetting::mapsEmbedUrl(),
         ]);
     }
 }

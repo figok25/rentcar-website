@@ -2,7 +2,7 @@
 @php
     $waUrl = \App\Services\WhatsAppLink::url('Halo, saya ingin menanyakan layanan travel '.$service->title.($service->route_label ? ' ('.$service->route_label.')' : '').'. Mohon info jadwal dan harganya.');
 @endphp
-<article class="bg-white rounded-xl border border-line p-5 flex flex-col gap-3">
+<article class="card p-5 flex flex-col gap-3">
     <div>
         <{{ $heading }} class="text-xl leading-tight"><a href="{{ $service->publicUrl() }}" class="hover:underline">{{ $service->title }}</a></{{ $heading }}>
         @if ($service->route_label)
