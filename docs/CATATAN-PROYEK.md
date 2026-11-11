@@ -41,11 +41,24 @@ Aturan tampil: hanya unit yang dipublikasikan dengan kategori aktif yang muncul.
 php artisan serve              # server lokal
 npm run dev                    # Vite untuk pengembangan (terminal terpisah)
 npm run build                  # build aset produksi
-php artisan test               # 151 tes
+php artisan test               # 155 tes
 php artisan optimize:clear     # bersihkan cache jika tampilan tidak berubah
 php artisan storage:link       # sekali saja, agar foto unit tampil
-php artisan db:seed --class=DemoDataSeeder   # data contoh, hanya untuk lokal
+php artisan db:seed --class=DemoDataSeeder   # data contoh minimal, hanya untuk lokal
+php artisan db:seed --class=ShowcaseSeeder   # data contoh lengkap untuk tangkapan layar (lihat di bawah)
 ```
+
+## Data contoh untuk tangkapan layar
+
+`php artisan db:seed --class=ShowcaseSeeder` mengisi website dengan data contoh yang lengkap: 14 unit
+(mobil, premium, minibus, motor) dengan tarif dan status beragam, biaya tambahan, syarat sewa, motto,
+keunggulan, 7 FAQ, 6 testimoni, 5 paket wisata, 4 layanan travel, dan menyalakan ketiga fitur opsional.
+
+- Aman dijalankan berulang (memperbarui data berdasarkan slug/judul) dan tidak menyentuh unit yang Anda buat sendiri.
+- Unit "Contoh ..." dari `DemoDataSeeder` disembunyikan agar tidak bercampur.
+- Foto berupa ilustrasi SVG berlabel "Foto contoh" (disimpan di `storage/app/public/.../showcase`). Ganti dengan foto asli lewat admin.
+- Testimoni diberi label sumber "Contoh testimoni" dan nama "Contoh Pelanggan". Jangan dipakai sebagai testimoni asli.
+- Menolak berjalan di production. Pastikan `php artisan storage:link` sudah dijalankan.
 
 ## Variabel `.env` yang penting
 
@@ -70,7 +83,7 @@ php artisan db:seed --class=DemoDataSeeder   # data contoh, hanya untuk lokal
 
 ## Hasil QA
 
-- 151 tes otomatis (skema, admin, katalog, form WhatsApp, konten, wisata/travel, SEO) lolos.
+- 155 tes otomatis (skema, admin, katalog, form WhatsApp, konten, wisata/travel, SEO) lolos.
 - Tes memastikan jumlah query halaman tidak bertambah seiring jumlah data (tidak ada N+1).
 - Audit aksesibilitas otomatis (axe-core, WCAG 2.1 AA) pada 11 halaman publik di layar desktop dan ponsel: tidak ada pelanggaran.
 - Header keamanan dasar di halaman publik (nosniff, X-Frame-Options, Referrer-Policy, Permissions-Policy, HSTS saat HTTPS).
@@ -91,4 +104,4 @@ php artisan db:seed --class=DemoDataSeeder   # data contoh, hanya untuk lokal
 3. Isi nomor WhatsApp asli, nama bisnis, dan kontak di Pengaturan website. Jangan memakai data demo.
 4. Hapus `public/robots.txt`, jalankan `php artisan storage:link`, `npm run build`, lalu `php artisan optimize`.
 5. Cek `/sitemap.xml` dan `/robots.txt`, lalu kirim sitemap ke Google Search Console.
-6. Jangan jalankan `DemoDataSeeder` di server produksi.
+6. Jangan jalankan `DemoDataSeeder` maupun `ShowcaseSeeder` di server produksi.
