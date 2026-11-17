@@ -23,6 +23,7 @@ class VehicleController extends Controller
         $vehicles = $this->catalog
             ->applyFilters($this->catalog->withCardData($this->catalog->visible($kind)), $filters)
             ->paginate(12)
+            ->onEachSide(1)
             ->withQueryString();
 
         return view('pages.vehicles.index', [

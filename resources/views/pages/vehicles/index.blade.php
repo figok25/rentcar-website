@@ -12,14 +12,15 @@
 @section('description', $selectedCategory?->description ? \Illuminate\Support\Str::limit($selectedCategory->description, 155) : $kind->description())
 
 @section('content')
-    <div class="bg-white border-b border-line">
-        <div class="container-page py-8 md:py-10">
+    <div class="relative overflow-hidden bg-white border-b border-line">
+        <div class="hero-stripes" aria-hidden="true"></div>
+        <div class="container-page relative py-8 md:py-12">
             <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-3">
                 <a href="{{ route('home') }}" class="hover:underline">Beranda</a>
                 <span aria-hidden="true">/</span>
                 <span>{{ $kind->title() }}</span>
             </nav>
-            <h1 class="text-4xl md:text-5xl">{{ $title }}</h1>
+            <h1 class="text-4xl md:text-5xl title-bar">{{ $title }}</h1>
             <p class="mt-3 text-road-soft max-w-prose">{{ $selectedCategory?->description ?: $kind->description() }}</p>
         </div>
     </div>
@@ -31,7 +32,7 @@
                 <span x-text="open ? 'Sembunyikan filter' : 'Tampilkan filter'">Tampilkan filter</span>
             </button>
 
-            <div id="panel-filter" class="mt-4 lg:mt-0 card p-4 lg:block!" x-show="open" x-cloak>
+            <div id="panel-filter" class="mt-4 lg:mt-0 card filter-card p-5 sm:p-6 lg:block!" x-show="open" x-cloak>
                 @include('partials.vehicle-filters', [
                     'action' => route($kind->indexRoute()),
                     'filters' => $filters,
@@ -40,14 +41,14 @@
             </div>
         </div>
 
-        <p class="mt-6 text-sm text-road-soft" aria-live="polite">
+        <p class="mt-6 text-sm font-semibold text-road-soft" aria-live="polite">
             @if ($vehicles->total() > 0)
                 Menampilkan {{ $vehicles->firstItem() }}-{{ $vehicles->lastItem() }} dari {{ $vehicles->total() }} kendaraan
             @endif
         </p>
 
         @if ($vehicles->isEmpty())
-            <div class="mt-4 bg-white border border-dashed border-line rounded-2xl p-10 text-center">
+            <div class="mt-4 bg-white border border-dashed border-[#b9c8d6] rounded-3xl p-10 text-center">
                 @if ($hasFilters)
                     <h2 class="text-2xl">Tidak ada kendaraan yang cocok</h2>
                     <p class="mt-2 text-road-soft">Coba longgarkan filter atau hapus kata kunci pencarian.</p>
@@ -61,14 +62,14 @@
                 @endif
             </div>
         @else
-            <div class="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 @foreach ($vehicles as $vehicle)
                     <x-vehicle-card :vehicle="$vehicle" heading="h2" />
                 @endforeach
             </div>
 
             <div class="mt-8">
-                {{ $vehicles->links() }}
+                {{ $vehicles->links('vendor.pagination.brand') }}
             </div>
         @endif
     </div>

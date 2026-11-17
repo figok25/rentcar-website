@@ -24,7 +24,7 @@ class HomeController extends Controller
         $featured = $catalog->withCardData($catalog->visible())
             ->featured()
             ->ordered()
-            ->limit(6)
+            ->limit(8)
             ->get();
 
         // Kategori yang punya unit tampil; motor hanya jika fiturnya aktif.
