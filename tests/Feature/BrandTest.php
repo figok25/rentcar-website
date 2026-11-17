@@ -28,7 +28,8 @@ class BrandTest extends TestCase
     {
         WebsiteSetting::set('business_name', 'Empatra');
 
-        $html = $this->get('/')->assertOk()->getContent();
+        // Halaman Kontak tidak punya hero, jadi tidak ada teks merah selain baris kedua nama bisnis.
+        $html = $this->get('/kontak')->assertOk()->getContent();
 
         $this->assertStringContainsString('<span class="text-brand">Empatra</span>', $html);
         $this->assertStringNotContainsString('text-accent">', $html);

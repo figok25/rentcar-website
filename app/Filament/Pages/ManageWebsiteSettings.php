@@ -37,6 +37,12 @@ class ManageWebsiteSettings extends Page
         'hero_subtitle' => 'home',
         'hero_image_path' => 'home',
         'footer_description' => 'home',
+        'home_stat_1_value' => 'home',
+        'home_stat_1_label' => 'home',
+        'home_stat_2_value' => 'home',
+        'home_stat_2_label' => 'home',
+        'home_stat_3_value' => 'home',
+        'home_stat_3_label' => 'home',
         'feature_motor_enabled' => 'features',
         'feature_tours_enabled' => 'features',
         'feature_travel_enabled' => 'features',
@@ -100,7 +106,7 @@ class ManageWebsiteSettings extends Page
                             ->directory('site')
                             ->visibility('public')
                             ->maxSize(2048)
-                            ->helperText('Opsional. Jika kosong, nama bisnis tampil di dalam plat kuning.'),
+                            ->helperText('Opsional. Jika kosong, ikon bawaan dan nama bisnis yang tampil.'),
                     ]),
 
                 Section::make('Kontak')
@@ -150,8 +156,20 @@ class ManageWebsiteSettings extends Page
                             ->directory('site')
                             ->visibility('public')
                             ->maxSize(4096)
-                            ->helperText('Opsional. Jika kosong, foto unit pilihan pertama dipakai.'),
+                            ->helperText('Opsional. Jika kosong, foto unit pilihan pertama dipakai; jika belum ada unit, foto bawaan yang tampil.'),
                         Textarea::make('footer_description')->label('Deskripsi footer')->rows(3)->maxLength(300),
+                    ]),
+
+                Section::make('Statistik beranda (opsional)')
+                    ->description('Tampil di kartu navy pada foto utama, di samping jumlah unit yang dihitung otomatis. Isi angka dan keterangannya sekaligus; yang salah satunya kosong tidak ditampilkan. Gunakan angka yang benar-benar ada.')
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('home_stat_1_value')->label('Statistik 1: angka')->maxLength(16)->placeholder('mis. 24/7'),
+                        TextInput::make('home_stat_1_label')->label('Statistik 1: keterangan')->maxLength(40)->placeholder('mis. Siap melayani'),
+                        TextInput::make('home_stat_2_value')->label('Statistik 2: angka')->maxLength(16),
+                        TextInput::make('home_stat_2_label')->label('Statistik 2: keterangan')->maxLength(40),
+                        TextInput::make('home_stat_3_value')->label('Statistik 3: angka')->maxLength(16),
+                        TextInput::make('home_stat_3_label')->label('Statistik 3: keterangan')->maxLength(40),
                     ]),
 
                 Section::make('Fitur opsional')

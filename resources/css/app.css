@@ -302,7 +302,8 @@
     .btn-wa:hover {
         background: var(--color-brand-dark);
     }
-    .btn-wa::before {
+    .btn-wa::before,
+    .wa-icon::before {
         content: '';
         flex: none;
         width: 1.125em;
@@ -310,6 +311,43 @@
         background-color: currentColor;
         -webkit-mask: var(--icon-whatsapp) center / contain no-repeat;
         mask: var(--icon-whatsapp) center / contain no-repeat;
+    }
+
+    /* Tombol putih untuk latar navy (mis. kotak ajakan konsultasi). */
+    .btn-light {
+        background: #fff;
+        color: var(--color-brand);
+    }
+    .btn-light:hover {
+        background: var(--color-brand-soft);
+    }
+
+    /* Dekorasi diagonal navy dan merah di sudut kanan atas hero. Murni hiasan, sangat tipis. */
+    .hero-stripes {
+        position: absolute;
+        inset-block: 0;
+        right: 0;
+        width: min(52%, 40rem);
+        overflow: hidden;
+        pointer-events: none;
+    }
+    .hero-stripes::before,
+    .hero-stripes::after {
+        content: '';
+        position: absolute;
+        top: -20%;
+        height: 150%;
+        transform: skewX(-24deg);
+    }
+    .hero-stripes::before {
+        right: -6%;
+        width: 46%;
+        background: linear-gradient(180deg, rgb(15 60 93 / 0.09), rgb(15 60 93 / 0.02));
+    }
+    .hero-stripes::after {
+        right: 38%;
+        width: 5%;
+        background: linear-gradient(180deg, rgb(176 46 54 / 0.14), rgb(176 46 54 / 0));
     }
 }
 

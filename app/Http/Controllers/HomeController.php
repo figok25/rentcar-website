@@ -49,7 +49,10 @@ class HomeController extends Controller
             'testimonials' => Testimonial::query()->published()->ordered()->limit(6)->get(),
             'heroTitle' => WebsiteSetting::get('hero_title'),
             'heroSubtitle' => WebsiteSetting::get('hero_subtitle'),
-            'heroImage' => $this->heroImageUrl() ?? $featured->first()?->primaryImage?->url(),
+            'heroImage' => $this->heroImageUrl()
+                ?? $featured->first()?->primaryImage?->url()
+                ?? asset('images/hero-default.jpg'),
+            'stats' => $this->stats($catalog->visible()->count()),
             'gallery' => VehicleImage::query()
                 ->whereIn('vehicle_id', $catalog->visible()->select('vehicles.id'))
                 ->with('vehicle:id,name')
@@ -61,6 +64,32 @@ class HomeController extends Controller
             'filters' => [],
             'options' => $catalog->filterOptions(CatalogKind::Car),
         ]);
+    }
+
+    /**
+     * Kartu statistik hero. Jumlah unit dihitung otomatis; sisanya diisi admin di Pengaturan website
+     * dan hanya tampil jika angka dan labelnya terisi. Tidak ada angka bawaan.
+     *
+     * @return list<array{value: string, label: string}>
+     */
+    private function stats(int $vehicleCount): array
+    {
+        $stats = [];
+
+        if ($vehicleCount > 0) {
+            $stats[] = ['value' => (string) $vehicleCount, 'label' => 'Unit kendaraan'];
+        }
+
+        foreach ([1, 2, 3] as $n) {
+            $value = WebsiteSetting::get("home_stat_{$n}_value");
+            $label = WebsiteSetting::get("home_stat_{$n}_label");
+
+            if (filled($value) && filled($label)) {
+                $stats[] = ['value' => $value, 'label' => $label];
+            }
+        }
+
+        return $stats;
     }
 
     private function heroImageUrl(): ?string

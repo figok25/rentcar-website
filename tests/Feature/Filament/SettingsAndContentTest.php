@@ -67,6 +67,20 @@ class SettingsAndContentTest extends TestCase
         $this->get('/')->assertSee('https://wa.me/6281234567890', false)->assertSee('Rental Maju');
     }
 
+    public function test_home_stats_are_saved_and_shown_on_the_home_page(): void
+    {
+        Livewire::test(ManageWebsiteSettings::class)
+            ->fillForm($this->validSettings([
+                'home_stat_1_value' => '24/7',
+                'home_stat_1_label' => 'Siap melayani',
+            ]))
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        $this->assertSame('24/7', WebsiteSetting::get('home_stat_1_value'));
+        $this->get('/')->assertOk()->assertSee('24/7')->assertSee('Siap melayani');
+    }
+
     public function test_invalid_whatsapp_is_rejected(): void
     {
         Livewire::test(ManageWebsiteSettings::class)
