@@ -1,15 +1,17 @@
 @props(['site'])
-<footer class="bg-plate-ink text-white mt-16">
-    <div class="container-page py-12 grid gap-10 md:grid-cols-3">
+<footer class="bg-ink text-white mt-16 border-t-4 border-accent">
+    <div class="container-page py-12 grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-            <x-plate small class="px-3 py-1 text-xl leading-none inline-block uppercase tracking-wide">{{ $site['name'] }}</x-plate>
+            <a href="{{ route('home') }}" class="inline-block rounded-lg" aria-label="{{ $site['name'] }} - beranda">
+                <x-brand :site="$site" tone="dark" />
+            </a>
             @if ($site['footerText'])
                 <p class="mt-4 text-sm text-white/75 max-w-xs">{{ $site['footerText'] }}</p>
             @endif
         </div>
 
         <nav aria-label="Menu footer">
-            <h2 class="font-display text-xl text-white">Jelajahi</h2>
+            <h2 class="text-lg font-extrabold text-white">Jelajahi</h2>
             <ul class="mt-3 space-y-2 text-sm text-white/75">
                 <li><a class="hover:text-white" href="{{ route('home') }}">Beranda</a></li>
                 <li><a class="hover:text-white" href="{{ route('vehicles.index') }}">Rental Mobil</a></li>
@@ -28,7 +30,7 @@
         </nav>
 
         <div>
-            <h2 class="font-display text-xl text-white">Hubungi kami</h2>
+            <h2 class="text-lg font-extrabold text-white">Hubungi kami</h2>
             <ul class="mt-3 space-y-2 text-sm text-white/75">
                 @if ($site['whatsapp'])
                     <li><a class="hover:text-white underline" href="{{ $site['whatsapp'] }}" target="_blank" rel="noopener">WhatsApp</a></li>

@@ -38,17 +38,15 @@
     $wide = count($nav) > 6;
     $desktopNav = $wide ? 'hidden xl:flex' : 'hidden lg:flex';
     $mobileOnly = $wide ? 'xl:hidden' : 'lg:hidden';
-    $linkBase = 'px-2.5 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-colors';
+    $linkBase = 'px-3.5 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors';
+    $linkActive = 'bg-brand-soft text-brand';
+    $linkIdle = 'text-road hover:bg-paper hover:text-brand';
 @endphp
 <header class="bg-white/90 backdrop-blur border-b border-line sticky top-0 z-40" x-data="{ open: false, sub: null }"
         @keydown.escape.window="open = false; sub = null" @click.outside="sub = null">
-    <div class="container-page h-[4.25rem] flex items-center justify-between gap-4">
-        <a href="{{ route('home') }}" class="flex items-center gap-2 shrink-0" aria-label="{{ $site['name'] }} - beranda">
-            @if ($site['logo'])
-                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($site['logo']) }}" alt="{{ $site['name'] }}" class="h-9 w-auto">
-            @else
-                <x-plate small class="px-3 py-1 text-xl leading-none tracking-wide uppercase">{{ $site['name'] }}</x-plate>
-            @endif
+    <div class="container-page h-[4.5rem] flex items-center justify-between gap-4">
+        <a href="{{ route('home') }}" class="shrink-0 rounded-lg" aria-label="{{ $site['name'] }} - beranda">
+            <x-brand :site="$site" />
         </a>
 
         <nav class="{{ $desktopNav }} items-center gap-1" aria-label="Menu utama">
@@ -57,21 +55,21 @@
                     <div class="relative">
                         <button type="button" @click="sub = sub === {{ $i }} ? null : {{ $i }}"
                                 :aria-expanded="(sub === {{ $i }}).toString()" aria-haspopup="true"
-                                class="{{ $linkBase }} inline-flex items-center gap-1 {{ $item['active'] ? 'bg-paper text-plate-ink' : 'text-road-soft hover:text-plate-ink' }}">
+                                class="{{ $linkBase }} inline-flex items-center gap-1 {{ $item['active'] ? $linkActive : $linkIdle }}">
                             {{ $item['label'] }}
                             <svg viewBox="0 0 20 20" class="size-4 transition-transform" :class="sub === {{ $i }} && 'rotate-180'" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
                         </button>
                         <div x-show="sub === {{ $i }}" x-cloak x-transition.opacity.duration.100ms
-                             class="absolute left-0 top-full mt-2 min-w-52 card p-1.5 shadow-lift">
+                             class="absolute left-0 top-full mt-2 min-w-56 card p-2 shadow-lift">
                             @foreach ($item['children'] as $child)
-                                <a href="{{ $child['href'] }}" class="block rounded-lg px-3 py-2 text-sm font-semibold text-road hover:bg-paper hover:text-plate-ink">{{ $child['label'] }}</a>
+                                <a href="{{ $child['href'] }}" class="block rounded-xl px-3.5 py-2.5 text-sm font-semibold text-road hover:bg-brand-soft hover:text-brand">{{ $child['label'] }}</a>
                             @endforeach
                         </div>
                     </div>
                 @else
                     <a href="{{ $item['href'] }}"
                        @if ($item['active']) aria-current="page" @endif
-                       class="{{ $linkBase }} {{ $item['active'] ? 'bg-paper text-plate-ink' : 'text-road-soft hover:text-plate-ink' }}">
+                       class="{{ $linkBase }} {{ $item['active'] ? $linkActive : $linkIdle }}">
                         {{ $item['label'] }}
                     </a>
                 @endif
@@ -94,11 +92,11 @@
         <div class="container-page py-2 flex flex-col">
             @foreach ($nav as $item)
                 <a href="{{ $item['href'] }}" @if ($item['active']) aria-current="page" @endif
-                   class="py-3 font-semibold {{ empty($item['children']) ? 'border-b border-line last:border-0' : '' }} {{ $item['active'] ? 'text-plate-ink' : 'text-road-soft' }}">
+                   class="py-3 font-semibold {{ empty($item['children']) ? 'border-b border-line last:border-0' : '' }} {{ $item['active'] ? 'text-brand' : 'text-road' }}">
                     {{ $item['label'] }}
                 </a>
                 @if (! empty($item['children']))
-                    <div class="mb-2 ml-3 border-l-2 border-plate pl-4 flex flex-col border-b border-line pb-2">
+                    <div class="mb-2 ml-3 border-l-2 border-accent pl-4 flex flex-col border-b border-line pb-2">
                         @foreach ($item['children'] as $child)
                             <a href="{{ $child['href'] }}" class="py-2 text-sm font-medium text-road-soft">{{ $child['label'] }}</a>
                         @endforeach
