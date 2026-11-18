@@ -5,6 +5,17 @@ Website etalase rental kendaraan. Pengunjung melihat unit, harga, dan status, la
 
 **Teknologi:** Laravel 13, Filament 5 (admin di `/admin`), Blade + Tailwind 4 + Alpine.js, MySQL.
 
+## Tampilan (tema Empatra)
+
+Tampilan publik memakai tema navy dan merah. Semua warna dan font didefinisikan di `resources/css/app.css` (blok `@theme`):
+
+- Warna: `brand` (navy), `accent` (merah, dipakai untuk harga dan tombol aksi), `ink`, `road`, `paper`, `line`, serta warna status `sign-*`.
+- Font: Plus Jakarta Sans (paket `@fontsource-variable/plus-jakarta-sans`).
+- Kelas komponen: `.container-page`, `.card`, `.card-hover`, `.filter-card`, `.field`, `.btn` (+ `-primary`, `-accent`, `-outline`, `-wa`, `-light`, `-sm`), `.title-bar`, `.hero-stripes`.
+- Komponen Blade: `<x-brand>` (logo + nama), `<x-vehicle-card>`, `<x-tour-card>`, `<x-travel-card>`, `<x-status-badge>`.
+- Nama bisnis, logo, dan statistik beranda diatur dari Pengaturan website. Logo bawaan: `public/images/logo-mark.png`. Foto hero bawaan: `public/images/hero-default.jpg`.
+- Alias warna `plate` (era plat kuning) sudah dihapus. Jangan dipakai lagi.
+
 ## Halaman publik
 
 | Alamat | Isi |
@@ -83,9 +94,10 @@ keunggulan, 7 FAQ, 6 testimoni, 5 paket wisata, 4 layanan travel, dan menyalakan
 
 ## Hasil QA
 
-- 155 tes otomatis (skema, admin, katalog, form WhatsApp, konten, wisata/travel, SEO) lolos.
+- 187 tes otomatis (skema, admin, katalog, kartu unit, halaman detail, form WhatsApp, konten, wisata/travel, SEO, tema) lolos.
 - Tes memastikan jumlah query halaman tidak bertambah seiring jumlah data (tidak ada N+1).
-- Audit aksesibilitas otomatis (axe-core, WCAG 2.1 AA) pada 11 halaman publik di layar desktop dan ponsel: tidak ada pelanggaran.
+- Audit aksesibilitas otomatis (axe-core, WCAG 2.1 AA) pada 10 halaman publik di lebar 375 dan 1280 piksel setelah perombakan tema: tidak ada pelanggaran.
+- Tidak ada geser horizontal pada lebar 375, 768, 1024, dan 1280 piksel. Menu mendatar baru tampil di lebar 1280 jika menunya enam atau lebih.
 - Header keamanan dasar di halaman publik (nosniff, X-Frame-Options, Referrer-Policy, Permissions-Policy, HSTS saat HTTPS).
   CSP tidak dipasang karena Alpine.js dan Livewire memerlukan eval.
 - Halaman error 404, 419, 429, 500, dan 503 berbahasa Indonesia.

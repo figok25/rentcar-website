@@ -35,7 +35,7 @@
     $nav[] = ['label' => 'Syarat Sewa', 'href' => route('requirements'), 'active' => request()->routeIs('requirements')];
     $nav[] = ['label' => 'Kontak', 'href' => route('contact'), 'active' => request()->routeIs('contact')];
     // Menu panjang baru tampil mendatar di layar lebih lebar.
-    $wide = count($nav) > 6;
+    $wide = count($nav) > 5;
     $desktopNav = $wide ? 'hidden xl:flex' : 'hidden lg:flex';
     $mobileOnly = $wide ? 'xl:hidden' : 'lg:hidden';
     $linkBase = 'px-3.5 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors';

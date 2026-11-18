@@ -5,12 +5,12 @@
 
 @section('content')
     <div class="container-page py-8">
-        <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-4">
-            <a href="{{ route('home') }}" class="hover:underline">Beranda</a>
+        <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-5">
+            <a href="{{ route('home') }}" class="hover:text-brand hover:underline">Beranda</a>
             <span aria-hidden="true">/</span>
-            <span>Kontak</span>
+            <span class="text-ink font-semibold">Kontak</span>
         </nav>
-        <h1 class="text-4xl md:text-5xl">Kontak</h1>
+        <h1 class="text-4xl md:text-5xl title-bar">Kontak</h1>
 
         <div class="mt-6 grid gap-8 lg:grid-cols-2">
             <div class="card divide-y divide-line self-start">
@@ -23,7 +23,7 @@
                 @if ($site['phone'])
                     <div class="p-5">
                         <p class="text-sm text-road-soft">Telepon</p>
-                        <p class="mt-1 text-lg">{{ $site['phone'] }}</p>
+                        <p class="mt-1 text-lg font-bold text-ink">{{ $site['phone'] }}</p>
                     </div>
                 @endif
                 @if ($site['address'])
@@ -35,10 +35,10 @@
                 @if ($site['instagram'] || $site['facebook'])
                     <div class="p-5 flex flex-wrap gap-4">
                         @if ($site['instagram'])
-                            <a class="underline" href="{{ $site['instagram'] }}" target="_blank" rel="noopener">Instagram</a>
+                            <a class="font-semibold text-brand underline" href="{{ $site['instagram'] }}" target="_blank" rel="noopener">Instagram</a>
                         @endif
                         @if ($site['facebook'])
-                            <a class="underline" href="{{ $site['facebook'] }}" target="_blank" rel="noopener">Facebook</a>
+                            <a class="font-semibold text-brand underline" href="{{ $site['facebook'] }}" target="_blank" rel="noopener">Facebook</a>
                         @endif
                     </div>
                 @endif

@@ -13,7 +13,7 @@
     </a>
     <div class="p-4 flex-1 flex flex-col gap-3">
         <div>
-            <{{ $heading }} class="text-xl leading-tight"><a href="{{ $tour->publicUrl() }}" class="hover:underline">{{ $tour->title }}</a></{{ $heading }}>
+            <{{ $heading }} class="text-xl leading-tight"><a href="{{ $tour->publicUrl() }}" class="hover:text-brand">{{ $tour->title }}</a></{{ $heading }}>
             @if ($tour->duration_label)
                 <p class="text-sm text-road-soft mt-1">{{ $tour->duration_label }}</p>
             @endif
@@ -23,18 +23,18 @@
         @endif
         <div class="mt-auto pt-2">
             @if ($tour->price !== null)
-                <x-plate small class="inline-flex items-baseline gap-1 px-3 py-1">
-                    <span class="text-sm font-semibold">Mulai</span>
-                    <span class="text-lg">{{ \App\Support\Money::rupiah($tour->price) }}</span>
-                </x-plate>
+                <p class="leading-none">
+                    <span class="block text-xs font-semibold text-road-soft mb-1">Mulai dari</span>
+                    <span class="text-xl font-extrabold text-accent">{{ \App\Support\Money::rupiah($tour->price) }}</span>
+                </p>
             @else
-                <p class="text-sm font-semibold">Tanyakan harga via WhatsApp</p>
+                <p class="text-sm font-bold text-ink">Tanyakan harga via WhatsApp</p>
             @endif
         </div>
         <div class="flex gap-2">
-            <a href="{{ $tour->publicUrl() }}" class="btn btn-outline flex-1 text-sm">Lihat detail</a>
+            <a href="{{ $tour->publicUrl() }}" class="btn btn-outline btn-sm flex-1">Lihat detail</a>
             @if ($waUrl)
-                <a href="{{ $waUrl }}" target="_blank" rel="noopener" class="btn btn-wa flex-1 text-sm"
+                <a href="{{ $waUrl }}" target="_blank" rel="noopener" class="btn btn-wa btn-sm flex-1"
                    aria-label="Konsultasi paket {{ $tour->title }} lewat WhatsApp">Konsultasi</a>
             @endif
         </div>

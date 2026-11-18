@@ -13,12 +13,12 @@
 
 @section('content')
     <div class="container-page container-narrow py-6">
-        <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-4">
-            <a href="{{ route('home') }}" class="hover:underline">Beranda</a>
+        <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-5">
+            <a href="{{ route('home') }}" class="hover:text-brand hover:underline">Beranda</a>
             <span aria-hidden="true">/</span>
-            <a href="{{ route('travel.index') }}" class="hover:underline">Travel</a>
+            <a href="{{ route('travel.index') }}" class="hover:text-brand hover:underline">Travel</a>
             <span aria-hidden="true">/</span>
-            <span>{{ $service->title }}</span>
+            <span class="text-ink font-semibold">{{ $service->title }}</span>
         </nav>
 
         <h1 class="text-4xl md:text-5xl leading-tight">{{ $service->title }}</h1>
@@ -31,7 +31,7 @@
 
         <div class="mt-5 flex flex-wrap items-center gap-4">
             @if ($service->price_label)
-                <x-plate small class="px-3 py-1.5 text-xl">{{ $service->price_label }}</x-plate>
+                <p class="text-2xl font-extrabold text-accent">{{ $service->price_label }}</p>
             @else
                 <p class="font-semibold">Tanyakan harga via WhatsApp</p>
             @endif
@@ -42,25 +42,25 @@
 
         @if ($service->description)
             <section class="mt-10" aria-labelledby="h-desk">
-                <h2 id="h-desk" class="text-2xl mb-2">Tentang layanan ini</h2>
+                <h2 id="h-desk" class="text-2xl title-bar mb-2">Tentang layanan ini</h2>
                 <p class="text-road">{!! nl2br(e($service->description)) !!}</p>
             </section>
         @endif
 
         @if ($service->vehicle_information)
             <section class="mt-8" aria-labelledby="h-armada">
-                <h2 id="h-armada" class="text-2xl mb-2">Armada</h2>
+                <h2 id="h-armada" class="text-2xl title-bar mb-2">Armada</h2>
                 <p class="card p-4">{!! nl2br(e($service->vehicle_information)) !!}</p>
             </section>
         @endif
 
         @if ($terms)
             <section class="mt-8" aria-labelledby="h-syarat">
-                <h2 id="h-syarat" class="text-2xl mb-3">Syarat dan ketentuan</h2>
+                <h2 id="h-syarat" class="text-2xl title-bar mb-3">Syarat dan ketentuan</h2>
                 <ul class="card divide-y divide-line">
                     @foreach ($terms as $term)
                         <li class="p-4 flex gap-3">
-                            <span aria-hidden="true" class="mt-2 size-2 rounded-full bg-plate shrink-0 ring-1 ring-plate-ink"></span>
+                            <span aria-hidden="true" class="mt-2 size-2 rounded-full bg-accent shrink-0"></span>
                             <span>{{ $term }}</span>
                         </li>
                     @endforeach
@@ -70,7 +70,7 @@
 
         @if ($related->isNotEmpty())
             <section class="mt-12" aria-labelledby="h-rel">
-                <h2 id="h-rel" class="text-2xl mb-4">Layanan lainnya</h2>
+                <h2 id="h-rel" class="text-2xl title-bar mb-5">Layanan lainnya</h2>
                 <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($related as $other)
                         <x-travel-card :service="$other" />

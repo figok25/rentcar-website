@@ -38,14 +38,6 @@
     --color-sign-red: #b3261e;
     --color-sign-amber: #8a5a00;
 
-    /*
-     * Alias lama (era plat kuning). Masih dipakai beberapa halaman yang belum dirombak;
-     * dihapus di fase UI-7 setelah semua tampilan memakai token merek di atas.
-     */
-    --color-plate: var(--color-accent);
-    --color-plate-dark: var(--color-accent-dark);
-    --color-plate-ink: var(--color-ink);
-
     --shadow-card: 0 1px 2px rgb(10 42 66 / 0.04), 0 6px 18px -8px rgb(10 42 66 / 0.1);
     --shadow-lift: 0 2px 4px rgb(10 42 66 / 0.05), 0 20px 40px -16px rgb(10 42 66 / 0.22);
 }
@@ -130,24 +122,6 @@
     }
     .container-narrow { max-width: 58rem; }
     .container-text { max-width: 46rem; }
-
-    /*
-     * Label bertepi (harga, nomor halaman error, kepala hero sementara).
-     * Dulu berbentuk plat nomor kuning; kini lencana navy muda yang tenang.
-     */
-    .plate {
-        background: var(--color-brand-soft);
-        color: var(--color-ink);
-        border: 1px solid #cddbe7;
-        border-radius: 0.875rem;
-        font-family: var(--font-display);
-        font-weight: 800;
-        letter-spacing: -0.01em;
-    }
-
-    .plate-sm {
-        border-radius: 0.625rem;
-    }
 
     /* Garis merah pendek di atas judul seksi. */
     .title-bar::before {

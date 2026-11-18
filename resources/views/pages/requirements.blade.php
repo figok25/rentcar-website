@@ -5,17 +5,17 @@
 
 @section('content')
     <div class="container-page container-narrow py-8">
-        <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-4">
-            <a href="{{ route('home') }}" class="hover:underline">Beranda</a>
+        <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-5">
+            <a href="{{ route('home') }}" class="hover:text-brand hover:underline">Beranda</a>
             <span aria-hidden="true">/</span>
-            <span>Syarat Sewa</span>
+            <span class="text-ink font-semibold">Syarat Sewa</span>
         </nav>
-        <h1 class="text-4xl md:text-5xl">Syarat Sewa</h1>
+        <h1 class="text-4xl md:text-5xl title-bar">Syarat Sewa</h1>
         <p class="mt-3 text-road-soft max-w-prose">Siapkan persyaratan berikut sebelum menyewa. Kami konfirmasi ketersediaan unit dan harga final lewat WhatsApp.</p>
 
         @forelse ($groups as $group)
             <section class="mt-8" aria-labelledby="g-{{ $group->id }}">
-                <h2 id="g-{{ $group->id }}" class="text-2xl">{{ $group->name }}</h2>
+                <h2 id="g-{{ $group->id }}" class="text-2xl title-bar">{{ $group->name }}</h2>
                 @if ($group->category)
                     <p class="text-sm text-road-soft">Untuk kategori {{ $group->category->name }}</p>
                 @endif
@@ -25,7 +25,7 @@
                 <ul class="mt-3 card divide-y divide-line">
                     @foreach ($group->requirements as $requirement)
                         <li class="p-4 flex gap-3">
-                            <span aria-hidden="true" class="mt-2 size-2 rounded-full bg-plate shrink-0 ring-1 ring-plate-ink"></span>
+                            <span aria-hidden="true" class="mt-2 size-2 rounded-full bg-accent shrink-0"></span>
                             <span>{{ $requirement->requirement_text }}</span>
                         </li>
                     @endforeach

@@ -21,12 +21,12 @@
 
 @section('content')
     <div class="container-page py-6">
-        <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-4">
-            <a href="{{ route('home') }}" class="hover:underline">Beranda</a>
+        <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-5">
+            <a href="{{ route('home') }}" class="hover:text-brand hover:underline">Beranda</a>
             <span aria-hidden="true">/</span>
-            <a href="{{ route('tours.index') }}" class="hover:underline">Paket Wisata</a>
+            <a href="{{ route('tours.index') }}" class="hover:text-brand hover:underline">Paket Wisata</a>
             <span aria-hidden="true">/</span>
-            <span>{{ $tour->title }}</span>
+            <span class="text-ink font-semibold">{{ $tour->title }}</span>
         </nav>
 
         <div class="grid gap-8 lg:grid-cols-5">
@@ -42,7 +42,7 @@
                                 <li>
                                     <button type="button" @click="current = {{ $index }}"
                                             :aria-current="current === {{ $index }} ? 'true' : 'false'"
-                                            :class="current === {{ $index }} ? 'ring-2 ring-plate-ink' : 'opacity-80 hover:opacity-100'"
+                                            :class="current === {{ $index }} ? 'ring-2 ring-brand' : 'opacity-80 hover:opacity-100'"
                                             class="block w-full rounded-lg overflow-hidden aspect-[4/3] border border-line"
                                             aria-label="Tampilkan foto {{ $index + 1 }}">
                                         <img src="{{ $image->url() }}" alt="" loading="lazy" class="size-full object-cover">
@@ -57,7 +57,7 @@
             </div>
 
             <div class="lg:col-span-2">
-                <h1 class="text-4xl leading-tight">{{ $tour->title }}</h1>
+                <h1 class="text-3xl sm:text-4xl leading-tight">{{ $tour->title }}</h1>
                 @if ($tour->duration_label)
                     <p class="mt-2 text-road-soft">{{ $tour->duration_label }}</p>
                 @endif
@@ -67,10 +67,10 @@
 
                 <div class="mt-5">
                     @if ($tour->price !== null)
-                        <x-plate small class="inline-flex items-baseline gap-1 px-3 py-1.5">
-                            <span class="text-sm font-semibold">Mulai</span>
-                            <span class="text-2xl">{{ Money::rupiah($tour->price) }}</span>
-                        </x-plate>
+                        <p class="leading-none">
+                            <span class="block text-xs font-semibold text-road-soft mb-1">Mulai dari</span>
+                            <span class="text-3xl font-extrabold text-accent">{{ Money::rupiah($tour->price) }}</span>
+                        </p>
                         <p class="mt-2 text-sm text-road-soft">Harga final dan jadwal dikonfirmasi admin.</p>
                     @else
                         <p class="font-semibold">Tanyakan harga via WhatsApp</p>
@@ -85,18 +85,18 @@
 
         @if ($tour->description)
             <section class="mt-10 max-w-3xl" aria-labelledby="h-desk">
-                <h2 id="h-desk" class="text-2xl mb-2">Tentang paket ini</h2>
+                <h2 id="h-desk" class="text-2xl title-bar mb-2">Tentang paket ini</h2>
                 <p class="text-road">{!! nl2br(e($tour->description)) !!}</p>
             </section>
         @endif
 
         @if ($itinerary)
             <section class="mt-10 max-w-3xl" aria-labelledby="h-itin">
-                <h2 id="h-itin" class="text-2xl mb-3">Rencana perjalanan</h2>
+                <h2 id="h-itin" class="text-2xl title-bar mb-3">Rencana perjalanan</h2>
                 <ol class="card divide-y divide-line">
                     @foreach ($itinerary as $step)
                         <li class="p-4 flex gap-3">
-                            <span class="font-display text-plate-ink bg-plate rounded px-2 h-fit text-sm leading-6" aria-hidden="true">{{ $loop->iteration }}</span>
+                            <span class="grid size-7 shrink-0 place-items-center rounded-full bg-brand text-sm font-bold text-white" aria-hidden="true">{{ $loop->iteration }}</span>
                             <span>{{ $step }}</span>
                         </li>
                     @endforeach
@@ -108,17 +108,17 @@
             <div class="mt-10 grid gap-6 md:grid-cols-2 max-w-3xl">
                 @if ($included)
                     <section aria-labelledby="h-inc">
-                        <h2 id="h-inc" class="text-2xl mb-3">Sudah termasuk</h2>
+                        <h2 id="h-inc" class="text-2xl title-bar mb-3">Sudah termasuk</h2>
                         <ul class="card divide-y divide-line">
                             @foreach ($included as $item)
-                                <li class="p-3 flex gap-2"><span aria-hidden="true" class="text-sign-green font-bold">&#10003;</span><span>{{ $item }}</span></li>
+                                <li class="p-3 flex gap-2"><span aria-hidden="true" class="text-sign-green-dark font-bold">&#10003;</span><span>{{ $item }}</span></li>
                             @endforeach
                         </ul>
                     </section>
                 @endif
                 @if ($excluded)
                     <section aria-labelledby="h-exc">
-                        <h2 id="h-exc" class="text-2xl mb-3">Belum termasuk</h2>
+                        <h2 id="h-exc" class="text-2xl title-bar mb-3">Belum termasuk</h2>
                         <ul class="card divide-y divide-line">
                             @foreach ($excluded as $item)
                                 <li class="p-3 flex gap-2"><span aria-hidden="true" class="text-sign-red font-bold">&#10005;</span><span>{{ $item }}</span></li>
@@ -131,7 +131,7 @@
 
         @if ($related->isNotEmpty())
             <section class="mt-12" aria-labelledby="h-rel">
-                <h2 id="h-rel" class="text-2xl mb-4">Paket lainnya</h2>
+                <h2 id="h-rel" class="text-2xl title-bar mb-5">Paket lainnya</h2>
                 <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($related as $other)
                         <x-tour-card :tour="$other" />

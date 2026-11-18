@@ -73,13 +73,10 @@
                 @if (count($stats) > 0)
                     <dl class="relative z-10 -mt-9 mx-4 sm:mx-8 grid grid-cols-2 sm:grid-flow-col sm:auto-cols-fr rounded-2xl bg-brand text-white shadow-lift divide-white/15 sm:divide-x">
                         @foreach ($stats as $i => $stat)
-                            <div class="flex items-center gap-3 px-4 py-3.5">
-                                <svg viewBox="0 0 24 24" class="size-6 shrink-0 text-accent-light" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{!! $statIcons[$i % count($statIcons)] !!}</svg>
-                                <div>
-                                    <dt class="sr-only">{{ $stat['label'] }}</dt>
-                                    <dd class="text-lg sm:text-xl font-extrabold leading-none">{{ $stat['value'] }}</dd>
-                                    <p class="mt-1 text-xs text-white/75 leading-tight" aria-hidden="true">{{ $stat['label'] }}</p>
-                                </div>
+                            <div class="grid grid-cols-[auto_1fr] items-center gap-x-3 px-4 py-3.5">
+                                <svg viewBox="0 0 24 24" class="size-6 shrink-0 text-accent-light row-span-2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{!! $statIcons[$i % count($statIcons)] !!}</svg>
+                                <dt class="col-start-2 row-start-2 mt-1 text-xs text-white/75 leading-tight">{{ $stat['label'] }}</dt>
+                                <dd class="col-start-2 row-start-1 text-lg sm:text-xl font-extrabold leading-none">{{ $stat['value'] }}</dd>
                             </div>
                         @endforeach
                     </dl>

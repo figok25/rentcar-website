@@ -5,8 +5,8 @@
 
 @section('content')
     <div class="container-page container-text py-16 text-center">
-        <x-plate class="inline-block px-6 py-2 text-5xl">429</x-plate>
-        <h1 class="mt-6 text-4xl">Terlalu banyak permintaan</h1>
+        <p class="text-7xl font-extrabold tracking-tight text-accent" aria-hidden="true">429</p><p class="sr-only">Kode kesalahan 429</p>
+        <h1 class="mt-2 text-4xl">Terlalu banyak permintaan</h1>
         <p class="mt-3 text-road-soft max-w-prose mx-auto">Mohon tunggu sebentar sebelum mencoba lagi.</p>
         <div class="mt-8 flex flex-wrap justify-center gap-3">
             <a href="{{ route('home') }}" class="btn btn-primary">Kembali ke beranda</a>

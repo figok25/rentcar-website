@@ -5,12 +5,12 @@
 
 @section('content')
     <div class="container-page py-8">
-        <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-4">
-            <a href="{{ route('home') }}" class="hover:underline">Beranda</a>
+        <nav aria-label="Jejak halaman" class="text-sm text-road-soft mb-5">
+            <a href="{{ route('home') }}" class="hover:text-brand hover:underline">Beranda</a>
             <span aria-hidden="true">/</span>
-            <span>Paket Wisata</span>
+            <span class="text-ink font-semibold">Paket Wisata</span>
         </nav>
-        <h1 class="text-4xl md:text-5xl">Paket Wisata</h1>
+        <h1 class="text-4xl md:text-5xl title-bar">Paket Wisata</h1>
         <p class="mt-3 text-road-soft max-w-prose">Pilih paket yang cocok, lalu tanyakan jadwal, jumlah peserta, dan harga final lewat WhatsApp.</p>
 
         @if ($tours->isEmpty())

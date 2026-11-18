@@ -4,7 +4,7 @@
 @endphp
 <article class="card p-5 flex flex-col gap-3">
     <div>
-        <{{ $heading }} class="text-xl leading-tight"><a href="{{ $service->publicUrl() }}" class="hover:underline">{{ $service->title }}</a></{{ $heading }}>
+        <{{ $heading }} class="text-xl leading-tight"><a href="{{ $service->publicUrl() }}" class="hover:text-brand">{{ $service->title }}</a></{{ $heading }}>
         @if ($service->route_label)
             <p class="text-sm text-road-soft mt-1">{{ $service->route_label }}</p>
         @endif
@@ -14,15 +14,15 @@
     @endif
     <div class="mt-auto pt-2">
         @if ($service->price_label)
-            <x-plate small class="inline-block px-3 py-1 text-base">{{ $service->price_label }}</x-plate>
+            <p class="text-lg font-extrabold text-accent leading-tight">{{ $service->price_label }}</p>
         @else
-            <p class="text-sm font-semibold">Tanyakan harga via WhatsApp</p>
+            <p class="text-sm font-bold text-ink">Tanyakan harga via WhatsApp</p>
         @endif
     </div>
     <div class="flex gap-2">
-        <a href="{{ $service->publicUrl() }}" class="btn btn-outline flex-1 text-sm">Lihat detail</a>
+        <a href="{{ $service->publicUrl() }}" class="btn btn-outline btn-sm flex-1">Lihat detail</a>
         @if ($waUrl)
-            <a href="{{ $waUrl }}" target="_blank" rel="noopener" class="btn btn-wa flex-1 text-sm"
+            <a href="{{ $waUrl }}" target="_blank" rel="noopener" class="btn btn-wa btn-sm flex-1"
                aria-label="Tanya {{ $service->title }} lewat WhatsApp">Konsultasi</a>
         @endif
     </div>
